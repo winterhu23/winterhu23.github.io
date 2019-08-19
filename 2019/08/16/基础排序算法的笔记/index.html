@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="1、稳定性 归并排序、冒泡排序、插入排序。基数排序是稳定的 选择排序、快速排序、希尔排序、堆排序是不稳定的  2.时间复杂度 最基础的四个算法：冒泡、选择、插入、快排中，快排的时间复杂度最小O(n*log2n)，其他都是O（n2）     排序法 平均时间 最差情形 稳定度 额外空间 备注    冒泡 O(n2) O(n2) 稳定 O(1) n小时较好   选择 O(n2) O(n2) 不稳定 O">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-08-19T15:52:04.524Z">
+<meta property="og:updated_time" content="2019-08-19T16:02:02.854Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="八大基础排序算法的笔记">
 <meta name="twitter:description" content="1、稳定性 归并排序、冒泡排序、插入排序。基数排序是稳定的 选择排序、快速排序、希尔排序、堆排序是不稳定的  2.时间复杂度 最基础的四个算法：冒泡、选择、插入、快排中，快排的时间复杂度最小O(n*log2n)，其他都是O（n2）     排序法 平均时间 最差情形 稳定度 额外空间 备注    冒泡 O(n2) O(n2) 稳定 O(1) n小时较好   选择 O(n2) O(n2) 不稳定 O">
@@ -256,79 +256,12 @@
 <td align="right">O(1)</td>
 <td align="right">n大时较好</td>
 </tr>
-<tr>
-<td><a id="more"></a></td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>#1. 冒泡排序</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>思想：相邻元素间的交换，若相等则不换，是稳定的排序</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>第一趟 1 2 5 6 7 3 4 0 8 9 //确定最大的一个 9</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>第二趟 1 2 5 6 3 4 0 7 8 9//确定 8</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>第三趟 1 2 5 3 4 0 6 7 8 9//确定 7</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>。。。</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>第九趟 0 1 2 3 4 5 6 7 8 9//确定 1 和最小的 0</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>元素长度为n 则需n-1趟</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
 </tbody></table>
+<a id="more"></a>
+
+
+
+<p>#1. 冒泡排序<br>思想：相邻元素间的交换，若相等则不换，是稳定的排序<br>第一趟 1 2 5 6 7 3 4 0 8 9 //确定最大的一个 9<br>第二趟 1 2 5 6 3 4 0 7 8 9//确定 8<br>第三趟 1 2 5 3 4 0 6 7 8 9//确定 7<br>。。。<br>第九趟 0 1 2 3 4 5 6 7 8 9//确定 1 和最小的 0<br>元素长度为n 则需n-1趟</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">//数组长度</span><br><span class="line">#define LENGTH(array) ( (sizeof(array)) / (sizeof(array[0])) </span><br><span class="line">/*</span><br><span class="line">* 冒泡排序</span><br><span class="line">* </span><br><span class="line">* 参数说明：</span><br><span class="line">*     i --- 趟数</span><br><span class="line">*     j --- 比较次数</span><br><span class="line">*/</span><br><span class="line">int main()&#123;</span><br><span class="line">	int a[10] = &#123;1,5,2,6,8,7,3,4,0,9&#125;;</span><br><span class="line">	int i;</span><br><span class="line">	for(i = 0; i &lt; LENGTH(a) - 1; i++ )&#123;//比几趟 n-1</span><br><span class="line">		for(j = 0; j &lt; LENGTH(a) - 1 -i;j++) &#123;//一趟比几次 每趟会少比一次</span><br><span class="line">			if( a[j] &gt;= a[j + 1] )&#123;</span><br><span class="line">				a[j] = a[j + 1] + a[j];</span><br><span class="line">				a[j + 1] = a[j] - a[j + 1];</span><br><span class="line">				a[j] = a[j] - a[j + 1];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"> 	&#125;</span><br><span class="line">	for(i = 0; i &lt; 10; i++)&#123;</span><br><span class="line">		printf(&quot;%d&quot;,a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>优化冒泡思想：因为每次只能确定一个，但交换时可能出现已经已经排好的情况，也就是没进行交换，设置一标志性变量pos,用于记录每趟排序中最后一次进行交换的位置。由于pos位置之后的记录均已交换到位,故在进行下一趟排序时只要扫描到pos位置即可<br>第一趟 1 2 5 6 7 3 4 0 8 9 //pos 下标为7 确定了 8 9<br>第二趟 1 2 5 6 3 4 0 7 8 9//pos 下标为6 确定了 7<br>第三趟 1 2 5 3 4 0 6 7 8 9//pos 下标为5 确定了 6<br>第四趟 1 2 3 4 0 5 6 7 8 9//pos 下标为4 确定了 5<br>第五趟 1 2 3 4 0 5 6 7 8 9//pos 下标为3 确定了 4<br>第六趟 1 2 3 4 0 5 6 7 8 9//pos 下标为2 确定了 3<br>第七趟 1 2 3 4 0 5 6 7 8 9//pos 下标为1 确定了 2<br>第八趟 1 2 3 4 0 5 6 7 8 9//pos 下标为0 确定了 1<br>优化了一趟（数据没选好QAQ）</p>
