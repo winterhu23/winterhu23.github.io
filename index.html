@@ -77,7 +77,7 @@
 		<nav class="header-nav">
 			<div class="social">
 				
-					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+					<a class="github" target="_blank" href="https://github.com/winterhu23/winterhu23.github.io" title="github"><i class="icon-github"></i></a>
 		        
 					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
 		        
@@ -118,7 +118,7 @@
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" href="https://github.com/winterhu23/winterhu23.github.io" title="github"><i class="icon-github"></i></a>
 			        
 						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
 			        
@@ -255,77 +255,10 @@
 <td align="right">n大时较好</td>
 </tr>
 <tr>
-<td>#1. 冒泡排序</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>思想：相邻元素间的交换，若相等则不换，是稳定的排序</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>第一趟 1 2 5 6 7 3 4 0 8 9 //确定最大的一个 9</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>第二趟 1 2 5 6 3 4 0 7 8 9//确定 8</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>第三趟 1 2 5 3 4 0 6 7 8 9//确定 7</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>。。。</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>第九趟 0 1 2 3 4 5 6 7 8 9//确定 1 和最小的 0</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>元素长度为n 则需n-1趟</td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-</tbody></table>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">//数组长度</span><br><span class="line">#define LENGTH(array) ( (sizeof(array)) / (sizeof(array[0])) </span><br><span class="line">/*</span><br><span class="line">* 冒泡排序</span><br><span class="line">* </span><br><span class="line">* 参数说明：</span><br><span class="line">*     i --- 趟数</span><br><span class="line">*     j --- 比较次数</span><br><span class="line">*/</span><br><span class="line">int main()&#123;</span><br><span class="line">	int a[10] = &#123;1,5,2,6,8,7,3,4,0,9&#125;;</span><br><span class="line">	int i;</span><br><span class="line">	for(i = 0; i &lt; LENGTH(a) - 1; i++ )&#123;//比几趟 n-1</span><br><span class="line">		for(j = 0; j &lt; LENGTH(a) - 1 -i;j++) &#123;//一趟比几次 每趟会少比一次</span><br><span class="line">			if( a[j] &gt;= a[j + 1] )&#123;</span><br><span class="line">				a[j] = a[j + 1] + a[j];</span><br><span class="line">				a[j + 1] = a[j] - a[j + 1];</span><br><span class="line">				a[j] = a[j] - a[j + 1];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"> 	&#125;</span><br><span class="line">	for(i = 0; i &lt; 10; i++)&#123;</span><br><span class="line">		printf(&quot;%d&quot;,a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>优化冒泡思想：因为每次只能确定一个，但交换时可能出现已经已经排好的情况，也就是没进行交换，设置一标志性变量pos,用于记录每趟排序中最后一次进行交换的位置。由于pos位置之后的记录均已交换到位,故在进行下一趟排序时只要扫描到pos位置即可<br>第一趟 1 2 5 6 7 3 4 0 8 9 //pos 下标为7 确定了 8 9<br>第二趟 1 2 5 6 3 4 0 7 8 9//pos 下标为6 确定了 7<br>第三趟 1 2 5 3 4 0 6 7 8 9//pos 下标为5 确定了 6<br>第四趟 1 2 3 4 0 5 6 7 8 9//pos 下标为4 确定了 5<br>第五趟 1 2 3 4 0 5 6 7 8 9//pos 下标为3 确定了 4<br>第六趟 1 2 3 4 0 5 6 7 8 9//pos 下标为2 确定了 3<br>第七趟 1 2 3 4 0 5 6 7 8 9//pos 下标为1 确定了 2<br>第八趟 1 2 3 4 0 5 6 7 8 9//pos 下标为0 确定了 1<br>优化了一趟（数据没选好QAQ）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">//数组长度</span><br><span class="line">#define LENGTH(array) ( (sizeof(array)) / (sizeof(array[0])) </span><br><span class="line">/*</span><br><span class="line">* 冒泡排序优化</span><br><span class="line">* </span><br><span class="line">* 参数说明：</span><br><span class="line">*     i --- 趟数</span><br><span class="line">*     j --- 比较次数</span><br><span class="line">*     pos --- 记录交换位置的下标</span><br><span class="line">*/</span><br><span class="line">int main()&#123;</span><br><span class="line">	int a[10] = &#123;1,5,2,6,8,7,3,4,0,9&#125;;</span><br><span class="line">	int j;</span><br><span class="line">    int i= 10 -1;  //初始时,最后位置保持不变  </span><br><span class="line">    while ( i&gt; 0) &#123;   </span><br><span class="line">        int pos = 0; //每趟开始时,无记录交换  </span><br><span class="line">        for ( j= 0; j&lt; i; j++)  </span><br><span class="line">            if (a[j]&gt; a[j+1]) &#123;  </span><br><span class="line">                pos= j; //记录交换的位置   </span><br><span class="line">                int tmp = a[j]; </span><br><span class="line">				a[j]=a[j+1];</span><br><span class="line">				a[j+1]=tmp;  </span><br><span class="line">            &#125;   </span><br><span class="line">        i = pos; //为下一趟排序作准备  </span><br><span class="line">     &#125;   </span><br><span class="line">     for(i = 0; i &lt; 10; i++)&#123;</span><br><span class="line">		printf(&quot;%d&quot;,r[i]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>#2.选择排序<br>思想：从无序序列中找出最小元素和第一个元素交换，接着从剩下的元素中继续这种选择和交换方式，最终得到一个有序序列。<br>第一次选择 {0}（5 2 6 8 7 3 4 1 9）<br>第二次选择 {0 1}（2 6 8 7 3 4 5 9）<br>第三次选择 {0 1 2}（6 8 7 3 4 5 9）<br>第四次选择 {0 1 2 3}（8 7 6 4 5 9）<br>第五次选择 {0 1 2 3 4}（7 6 8 5 9）<br>第六次选择 {0 1 2 3 4 5}（8 6 7 9）<br>第七次选择 {0 1 2 3 4 5 6}（8 7 9）<br>第八次选择 {0 1 2 3 4 5 6 7}（8 9）<br>第九次选择 {0 1 2 3 4 5 6 7 8 9  }</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">//数组长度</span><br><span class="line">#define LENGTH(array) ( (sizeof(array)) / (sizeof(array[0])) </span><br><span class="line">/*</span><br><span class="line">* 选择排序</span><br><span class="line">* </span><br><span class="line">* 参数说明：</span><br><span class="line">*     i --- 趟数</span><br><span class="line">*     j --- 比较次数</span><br><span class="line">*     index --- 记录无序列表下标最小的位置</span><br><span class="line">*     tmp --- 临时存储变量</span><br><span class="line">*/</span><br><span class="line">int main()&#123;</span><br><span class="line">	int a[10] = &#123;1,5,2,6,8,7,3,4,0,9&#125;;</span><br><span class="line">	int i;//几次选择 </span><br><span class="line">	int j;//无序序列的首部 </span><br><span class="line">	int index;//记录比无序序列首部还小的位置的下标 </span><br><span class="line">	int tmp;</span><br><span class="line">	for(i = 0; i &lt; LENGTH(a) - 1; i ++)&#123;</span><br><span class="line">		index = i;</span><br><span class="line">		for(j = i + 1; j &lt; LENGTH(a); j ++)&#123;</span><br><span class="line">			if(a[j] &lt; a[index])&#123; 	</span><br><span class="line">			index = j;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; </span><br><span class="line">		tmp = a[i];</span><br><span class="line">		a[i] = a[index];</span><br><span class="line">		a[index] = tmp;</span><br><span class="line">	&#125;</span><br><span class="line">	for(i = 0; i &lt; 10; i++)&#123;</span><br><span class="line">		printf(&quot;%d&quot;,a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<td>
+        
+          <a class="article-more-a" href="/2019/08/16/基础排序算法的笔记/#more">more >></a>
+        
       
 
       
