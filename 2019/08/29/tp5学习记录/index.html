@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>tp5学习记录 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.环境搭建 2.访问替换，更改入口文件 3.控制器 4.页面的css样式 5.连接数据库 6.tp5语法 7.踩坑记录  1.环境搭建①phpstudy下载安装②thinkphp下载下载好thinkphp后解压到phpstudy的www文件下（也可以在www文件下新建一个tp5文件，然后解压到tp5中）③navicat premium下载与破解用navicat可视化mysql进行数据操作">
+  <meta name="description" content="1.环境搭建 2.访问替换，更改入口文件 3.控制器 4.页面的css样式 5.连接数据库 6.tp5语法 7.踩坑记录">
 <meta name="keywords" content="thinkphp5">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tp5学习记录">
 <meta property="og:url" content="http://yoursite.com/2019/08/29/tp5学习记录/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1.环境搭建 2.访问替换，更改入口文件 3.控制器 4.页面的css样式 5.连接数据库 6.tp5语法 7.踩坑记录  1.环境搭建①phpstudy下载安装②thinkphp下载下载好thinkphp后解压到phpstudy的www文件下（也可以在www文件下新建一个tp5文件，然后解压到tp5中）③navicat premium下载与破解用navicat可视化mysql进行数据操作">
+<meta property="og:description" content="1.环境搭建 2.访问替换，更改入口文件 3.控制器 4.页面的css样式 5.连接数据库 6.tp5语法 7.踩坑记录">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-08-30T02:53:07.720Z">
+<meta property="og:updated_time" content="2019-10-07T10:41:12.194Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tp5学习记录">
-<meta name="twitter:description" content="1.环境搭建 2.访问替换，更改入口文件 3.控制器 4.页面的css样式 5.连接数据库 6.tp5语法 7.踩坑记录  1.环境搭建①phpstudy下载安装②thinkphp下载下载好thinkphp后解压到phpstudy的www文件下（也可以在www文件下新建一个tp5文件，然后解压到tp5中）③navicat premium下载与破解用navicat可视化mysql进行数据操作">
+<meta name="twitter:description" content="1.环境搭建 2.访问替换，更改入口文件 3.控制器 4.页面的css样式 5.连接数据库 6.tp5语法 7.踩坑记录">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -186,6 +186,7 @@
 <li><a href="#6tp5语法">6.tp5语法</a></li>
 <li><a href="#7踩坑记录">7.踩坑记录</a></li>
 </ul>
+<a id="more"></a>
 <h1 id="1-环境搭建"><a href="#1-环境搭建" class="headerlink" title="1.环境搭建"></a>1.环境搭建</h1><p>①<a href="https://blog.csdn.net/weixin_33748818/article/details/86085524" target="_blank" rel="noopener">phpstudy下载安装</a><br>②<a href="http://www.thinkphp.cn/down.html" target="_blank" rel="noopener">thinkphp下载</a><br>下载好thinkphp后解压到phpstudy的www文件下（也可以在www文件下新建一个tp5文件，然后解压到tp5中）<br>③<a href="https://blog.csdn.net/ly_solo/article/details/80405373" target="_blank" rel="noopener">navicat premium下载与破解</a><br>用navicat可视化mysql进行数据操作</p>
 <h1 id="2-访问替换，更改入口文件"><a href="#2-访问替换，更改入口文件" class="headerlink" title="2.访问替换，更改入口文件"></a>2.访问替换，更改入口文件</h1><p>目的：通过<a href="http://www.xxx.com/入口文件" target="_blank" rel="noopener">www.xxx.com/入口文件</a> 的方式代替 localhost://tp5/public 进行访问<br><a href="https://blog.csdn.net/Lishixian666/article/details/81093882" target="_blank" rel="noopener">thinkphp隐藏index.php的方法</a></p>
 <h1 id="3-控制器"><a href="#3-控制器" class="headerlink" title="3.控制器"></a>3.控制器</h1><p>控制器类文件的实际位置是<br>application\san\controller\Index.php<br>控制器类可以无需继承任何类，命名空间默认以<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">```php</span><br><span class="line">namespace app\san\controller;//声明</span><br><span class="line"></span><br><span class="line">class index//与文件名相同</span><br><span class="line">&#123;</span><br><span class="line">	//控制器</span><br><span class="line">    public function index()</span><br><span class="line">    &#123;</span><br><span class="line">		//返回与controller同级目录下的view文件中对应控制器名称对应的界面 </span><br><span class="line">        return view();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -490,7 +491,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">leetcode 简单 数组</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">leetcode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">简单</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -498,7 +511,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">坑</a>
+                <a href="javascript:void(0)" class="js-tag color4">线性表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -506,11 +523,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">英语</a>
+                <a href="javascript:void(0)" class="js-tag color2">坑</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">英语</a>
               </li>
             
             <div class="clearfix"></div>

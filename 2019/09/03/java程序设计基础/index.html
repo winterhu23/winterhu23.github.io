@@ -8,17 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>java程序设计基础 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一.java概述 java源码 –&amp;gt; java字节码 –&amp;gt; JVM运行 java之父—詹姆斯.高斯林 James Gosling二.配置环境 下载javajdk 配置环境变量 -  控制台用java -version 查看版本号三.JRE和JDK的区别 1.定义 JRE(Java Runtime Enviroment)是Java的运行环境。面向Java程序的使用者，而不是开发者。如果你">
+  <meta name="description" content="一.java概述 二.配置环境 三.JRE和JDK的区别 四.java的helloworld 5.多态的三大特性 6.java为什么不用多继承 7.抽象类 8.接口 9.抽象类和接口的几点区别 10.hashSet中插入自定义Person对象 作用：哪些情况下会对对象的相等性进行判断？跟踪查看JDK源码，研究hashset.add方法内部实现的细节">
+<meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java程序设计基础">
 <meta property="og:url" content="http://yoursite.com/2019/09/03/java程序设计基础/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="一.java概述 java源码 –&amp;gt; java字节码 –&amp;gt; JVM运行 java之父—詹姆斯.高斯林 James Gosling二.配置环境 下载javajdk 配置环境变量 -  控制台用java -version 查看版本号三.JRE和JDK的区别 1.定义 JRE(Java Runtime Enviroment)是Java的运行环境。面向Java程序的使用者，而不是开发者。如果你">
+<meta property="og:description" content="一.java概述 二.配置环境 三.JRE和JDK的区别 四.java的helloworld 5.多态的三大特性 6.java为什么不用多继承 7.抽象类 8.接口 9.抽象类和接口的几点区别 10.hashSet中插入自定义Person对象 作用：哪些情况下会对对象的相等性进行判断？跟踪查看JDK源码，研究hashset.add方法内部实现的细节">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-09-03T10:03:15.547Z">
+<meta property="og:image" content="http://yoursite.com/2019/09/03/java程序设计基础/%E8%8F%B1%E5%BD%A2%E9%97%AE%E9%A2%98.png">
+<meta property="og:updated_time" content="2019-10-07T10:39:43.642Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java程序设计基础">
-<meta name="twitter:description" content="一.java概述 java源码 –&amp;gt; java字节码 –&amp;gt; JVM运行 java之父—詹姆斯.高斯林 James Gosling二.配置环境 下载javajdk 配置环境变量 -  控制台用java -version 查看版本号三.JRE和JDK的区别 1.定义 JRE(Java Runtime Enviroment)是Java的运行环境。面向Java程序的使用者，而不是开发者。如果你">
+<meta name="twitter:description" content="一.java概述 二.配置环境 三.JRE和JDK的区别 四.java的helloworld 5.多态的三大特性 6.java为什么不用多继承 7.抽象类 8.接口 9.抽象类和接口的几点区别 10.hashSet中插入自定义Person对象 作用：哪些情况下会对对象的相等性进行判断？跟踪查看JDK源码，研究hashset.add方法内部实现的细节">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/03/java程序设计基础/%E8%8F%B1%E5%BD%A2%E9%97%AE%E9%A2%98.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -174,7 +177,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="一-java概述"><a href="#一-java概述" class="headerlink" title="一.java概述"></a>一.java概述</h1><ul>
+        <!-- TOC -->
+
+<ul>
+<li><a href="#一java概述">一.java概述</a></li>
+<li><a href="#二配置环境">二.配置环境</a></li>
+<li><a href="#三jre和jdk的区别">三.JRE和JDK的区别</a></li>
+<li><a href="#四java的helloworld">四.java的helloworld</a></li>
+<li><a href="#5多态的三大特性">5.多态的三大特性</a></li>
+<li><a href="#6java为什么不用多继承">6.java为什么不用多继承</a></li>
+<li><a href="#7抽象类">7.抽象类</a></li>
+<li><a href="#8接口">8.接口</a></li>
+<li><a href="#9抽象类和接口的几点区别">9.抽象类和接口的几点区别</a></li>
+<li><a href="#10hashset中插入自定义person对象">10.hashSet中插入自定义Person对象</a></li>
+<li><a href="#作用哪些情况下会对对象的相等性进行判断跟踪查看jdk源码研究hashsetadd方法内部实现的细节">作用：哪些情况下会对对象的相等性进行判断？跟踪查看JDK源码，研究hashset.add方法内部实现的细节</a></li>
+</ul>
+<!-- /TOC -->
+<a id="more"></a>
+<h1 id="一-java概述"><a href="#一-java概述" class="headerlink" title="一.java概述"></a>一.java概述</h1><ul>
 <li>java源码 –&gt; java字节码 –&gt; JVM运行</li>
 <li>java之父—詹姆斯.高斯林 James Gosling<h1 id="二-配置环境"><a href="#二-配置环境" class="headerlink" title="二.配置环境"></a>二.配置环境</h1></li>
 <li><a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk12-downloads-5295953.html" target="_blank" rel="noopener">下载javajdk</a></li>
@@ -192,6 +212,80 @@
 </li>
 </ul>
 </li>
+</ul>
+<h1 id="5-多态的三大特性"><a href="#5-多态的三大特性" class="headerlink" title="5.多态的三大特性"></a>5.多态的三大特性</h1><ul>
+<li>继承，子类重写父类方法</li>
+<li>父类实例引用子类对象</li>
+<li>父类实例使用子类方法</li>
+</ul>
+<h1 id="6-java为什么不用多继承"><a href="#6-java为什么不用多继承" class="headerlink" title="6.java为什么不用多继承"></a>6.java为什么不用多继承</h1><ul>
+<li>多继承中的菱形继承问题</li>
+</ul>
+<p><img src="%E8%8F%B1%E5%BD%A2%E9%97%AE%E9%A2%98.png" alt="菱形问题"></p>
+<h1 id="7-抽象类"><a href="#7-抽象类" class="headerlink" title="7.抽象类"></a>7.抽象类</h1><p>用abstract修饰的类叫做抽象类。    </p>
+<ul>
+<li>抽象类的特点<ul>
+<li>1.抽象类不能有对象，（不能用new此关键字来创建抽象类的对象）；</li>
+<li>2.有抽象方法的类一定是抽象类，但是抽象类中不一定有抽象方法；</li>
+<li>3.抽象类中的抽象方法必须在子类中被重写</li>
+</ul>
+</li>
+<li>抽象类生来就注定它是要被继承的，如果没有任何一个类去继承它的话，那么也就失去了它的意义；抽象方法生来就是要被重写的，而且是必须重写。（只要继承了某个抽象类，就必须去重写此抽象类中含有的抽象方法）</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span></span>;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">sleep</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>以上代码是定义了一个叫做animal的抽象类，其中含有eat（）和sleep（）两个抽象方法。<br>这里指的注意的是：抽象方法不能有方法体，在方法后面加一个大括号而里面什么都不写也是不行的，编译器会报“abstract methods do not specify a body”这样一个错误</li>
+<li>定义了一个animal类之后再定义一个cat类：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Cat</span> <span class="keyword">extends</span> <span class="title">Animal</span></span>&#123;</span><br><span class="line"> </span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"我是猫，我吃的是猫粮呀"</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sleep</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"我是猫，我比你们人类睡的时间短！"</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当一个类继承抽象类的时候，这个类必须去重写所继承的抽象类的抽象方法，否则编译器会报“The type Cat must implement the inherited abstract method Animal.eat()”的错误</li>
+</ul>
+<h1 id="8-接口"><a href="#8-接口" class="headerlink" title="8.接口"></a>8.接口</h1><ul>
+<li>接口就是一个规范和抽象类比较相似。它只管做什么，不管怎么做。通俗的讲，借口就是某个事物对外提供的一些功能的声明，其定义和类比较相似，只不过是通过interface关键字来完成<ul>
+<li>1.接口中的所有属性默认为：public static final ****；</li>
+<li>2.接口中的所有方法默认为：public abstract ****；</li>
+<li>3.接口不再像类一样用关键字 extends去“继承”，而是用 implements 去“实现”，也就是说类和接口的关系叫做实现，（例如：A类实现了B接口，那么成为A为B接口的实现类。而类与类之间的继承的话，叫做A类继承了B类，其中B类即为A类的父类）。实现接口与类的继承比较相似</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Sleep</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> b = <span class="number">2</span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ioSleep</span><span class="params">(<span class="keyword">int</span> i)</span></span>;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Eat</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">ioEat</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Study</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ioStudy</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Cat</span> <span class="keyword">implements</span> <span class="title">Sleep</span>,<span class="title">Eat</span></span>&#123;</span><br><span class="line"> </span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ioSleep</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"我是猫，我每天都不用睡觉！！！"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ioEat</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"我是猫，我吃猫粮！！！"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Sleep</span>,<span class="title">Eat</span>,<span class="title">Study</span></span>&#123;</span><br><span class="line"> </span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ioStudy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"我是人，我每天都要学习"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ioEat</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"我是人，我要吃大鱼大肉还要喝酒"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ioSleep</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"我是人，我每天要睡24小时"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>以上代码定义了三个接口分别是：Study，Eat，Sleep，以及两个类分别是Cat和Person。其中Cat类实现了两个接口分别是：Eat和Sleep，而Person实现了三个接口分别是：Study，Eat，Sleep。这是为什么呢？就是因为Cat并不需要学习，而Person需要学习，所以在Cat类中没有实现Study这个接口，而在Person中却是有的。那么显而易见，接口所阐述的是“有没有”的问题，而刚刚所说的抽象类阐述的是“是不是”的问题</li>
+</ul>
+<h1 id="9-抽象类和接口的几点区别"><a href="#9-抽象类和接口的几点区别" class="headerlink" title="9.抽象类和接口的几点区别"></a>9.抽象类和接口的几点区别</h1><ul>
+<li>1.抽象类描述的是“是不是”的问题，而接口描述的是“有没有”的问题；</li>
+<li>2.在Java中类的继承是“单继承”，可以“多对一”，但是不允许“一对多”。而一个类却可以同时实现多个接口；</li>
+<li>注意<ul>
+<li>在接口中所有的属性的修饰符都默认为”public static final”,而final所修饰的属性里面的常量值是不能做修改的。</li>
+<li>接口中的方法默认修饰符为“public abstract”</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://blog.csdn.net/my_name_is_zwz/article/details/80001121" target="_blank" rel="noopener">java接口和抽象类区别链接</a></p>
+<h1 id="10-hashSet中插入自定义Person对象"><a href="#10-hashSet中插入自定义Person对象" class="headerlink" title="10.hashSet中插入自定义Person对象"></a>10.hashSet中插入自定义Person对象</h1><ul>
+<li><p>HashSet：一种没有重复元素的无序集合</p>
+</li>
+<li><p>我们一般说HashSet是无序的，它既不能保证存储和取出顺序一致，更不能保证自然顺序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// HashSet 源码节选-JKD8</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> map.put(e, PRESENT)==<span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>HashSet直接调用HashMap的put方法，并且将元素e放到map的key位置（保证了唯一性 ）</p>
+</li>
+<li><p><strong>自己写的类要重写hashcode()和equals()方法</strong></p>
+</li>
+<li><p>Person类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name,<span class="keyword">int</span> age)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setname</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setage</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"name:"</span>+name+<span class="string">"; age:"</span>+age); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span><span class="comment">//重写父类objecthashCode方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> hash = name.hashCode() + age;</span><br><span class="line">        System.out.println(<span class="string">"hashCode is coding: "</span>+ hash);</span><br><span class="line">       <span class="keyword">return</span> hash;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//定义对象相等性规则</span></span><br><span class="line">    <span class="meta">@Override</span><span class="comment">//重写Object的equals方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span></span>&#123;</span><br><span class="line">		Person p = (Person)o;</span><br><span class="line">		<span class="comment">//string.equals()比的是内容  ==比的是地址</span></span><br><span class="line">        System.out.println(<span class="string">"equals is coding"</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.name.equals(p.name) &amp;&amp; <span class="keyword">this</span>.age == p.age)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>@Override是伪代码,表示重写(当然不写也可以)，不过写上有如下好处:  1、可以当注释用,方便阅读； 2、编译器可以给你验证@Override下面的方法名是否是你父类中所有的，如果没有则报错。例如，你如果没写@Override，而你下面的方法名又写错了，这时你的编译器是可以编译通过的，因为编译器以为这个方法是你的子类中自己增加的方法。</p>
+</li>
+<li><p>HashSet类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HashSetHomework</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        HashSet&lt;Person&gt;  Person1 = <span class="keyword">new</span> HashSet&lt;Person&gt;();</span><br><span class="line">        Person p1 = <span class="keyword">new</span> Person(<span class="string">"Jack1"</span>,<span class="number">25</span>);</span><br><span class="line">		Person p2 = <span class="keyword">new</span> Person(<span class="string">"Jack1"</span>,<span class="number">25</span>);</span><br><span class="line">        Person1.add(p1);</span><br><span class="line">        Person1.add(p2);</span><br><span class="line">        System.out.println(Person1.size());</span><br><span class="line">		<span class="comment">//增强for遍历</span></span><br><span class="line">		<span class="keyword">for</span>(Person s : Person1)&#123;</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"-----"</span>);</span><br><span class="line">        <span class="comment">//迭代器遍历</span></span><br><span class="line">        Iterator&lt;Person&gt; iterator = Person1.iterator();</span><br><span class="line">        <span class="keyword">while</span>(iterator.hasNext())&#123;</span><br><span class="line">        Person integer = iterator.next();</span><br><span class="line">        System.out.println(integer);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用hashCode的作用是提高取对象的效率</p>
+<h1 id="作用：哪些情况下会对对象的相等性进行判断？跟踪查看JDK源码，研究hashset-add方法内部实现的细节"><a href="#作用：哪些情况下会对对象的相等性进行判断？跟踪查看JDK源码，研究hashset-add方法内部实现的细节" class="headerlink" title="作用：哪些情况下会对对象的相等性进行判断？跟踪查看JDK源码，研究hashset.add方法内部实现的细节"></a>作用：哪些情况下会对对象的相等性进行判断？跟踪查看JDK源码，研究hashset.add方法内部实现的细节</h1></li>
 </ul>
 
       
@@ -222,6 +316,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -427,7 +532,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">leetcode 简单 数组</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">leetcode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">简单</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -435,7 +552,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">坑</a>
+                <a href="javascript:void(0)" class="js-tag color4">线性表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">c语言</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -443,11 +564,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">英语</a>
+                <a href="javascript:void(0)" class="js-tag color2">坑</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">英语</a>
               </li>
             
             <div class="clearfix"></div>
