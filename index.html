@@ -156,6 +156,1094 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-栈的顺序存储结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/05/栈的顺序存储结构/">栈的顺序存储结构</a>
+    </h1>
+  
+
+        
+        <a href="/2019/11/05/栈的顺序存储结构/" class="archive-article-date">
+  	<time datetime="2019-11-05T07:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- TOC -->
+
+<ul>
+<li><a href="#一顺序栈的基本定义">一.顺序栈的基本定义</a></li>
+<li><a href="#二顺序栈的基本操作">二.顺序栈的基本操作</a><ul>
+<li><a href="#1结构体声明">1.结构体声明</a></li>
+<li><a href="#2初始化函数">2.初始化函数</a></li>
+<li><a href="#3进栈函数">3.进栈函数</a></li>
+<li><a href="#4出栈函数">4.出栈函数</a></li>
+<li><a href="#5打印栈">5.打印栈</a></li>
+<li><a href="#6求栈长度">6.求栈长度</a></li>
+<li><a href="#7求栈顶元素">7.求栈顶元素</a></li>
+<li><a href="#8test">8.test</a></li>
+</ul>
+</li>
+<li><a href="#三两栈共享空间">三.两栈共享空间</a><ul>
+<li><a href="#1定义">1.定义</a></li>
+<li><a href="#2思路">2.思路</a></li>
+<li><a href="#3实现">3.实现</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="一-顺序栈的基本定义"><a href="#一-顺序栈的基本定义" class="headerlink" title="一.顺序栈的基本定义"></a>一.顺序栈的基本定义</h1><ul>
+<li>栈是一种特殊的线性表，栈是限定仅在表尾进行插入和删除操作的线性表。我们把允许插入和删除的一端称为栈顶（top)，另一端称为栈底（bottom），不含任何数据元素的栈称为空栈。栈又称为后进先出（Last In First Out)的线性表，简称LIFO结构</li>
+<li>栈的顺序储存结构简称为顺序栈，顺序栈是利用一组地址连续的存储单元依次存放栈底到栈顶的数据元素，栈底位置固定不变，栈顶位置随着入栈和出栈操作而变化。栈顶指针top等于零时，代表栈中有一个元素，因此通常把空栈的判定条件定为top等于-1.<h1 id="二-顺序栈的基本操作"><a href="#二-顺序栈的基本操作" class="headerlink" title="二.顺序栈的基本操作"></a>二.顺序栈的基本操作</h1><h2 id="1-结构体声明"><a href="#1-结构体声明" class="headerlink" title="1.结构体声明"></a>1.结构体声明</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 100</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> elemtype;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Sqstack</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	elemtype data[MAXSIZE];							<span class="comment">//数据数组</span></span><br><span class="line">	<span class="keyword">int</span> top;										<span class="comment">//栈顶指针</span></span><br><span class="line">&#125;Sqstack;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="2-初始化函数"><a href="#2-初始化函数" class="headerlink" title="2.初始化函数"></a>2.初始化函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitStack</span><span class="params">(Sqstack *S)</span>								<span class="comment">//初始化函数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	S-&gt;top = <span class="number">-1</span>;								<span class="comment">//使栈顶指针top为-1 ，表示栈为空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-进栈函数"><a href="#3-进栈函数" class="headerlink" title="3.进栈函数"></a>3.进栈函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Push</span><span class="params">(Sqstack *S, elemtype e)</span>				<span class="comment">//进栈函数，e为新加入栈顶的元素</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (S-&gt;top == MAXSIZE - <span class="number">1</span>)				<span class="comment">//如果栈已经满了</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"栈已满！"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	S-&gt;top++;								<span class="comment">//使栈顶指针top加1</span></span><br><span class="line">	S-&gt;data[S-&gt;top] = e;					<span class="comment">//将新元素e加入</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-出栈函数"><a href="#4-出栈函数" class="headerlink" title="4.出栈函数"></a>4.出栈函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Pop</span><span class="params">(Sqstack *S, elemtype *e)</span>			<span class="comment">//出栈函数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (S-&gt;top == <span class="number">-1</span>)									<span class="comment">//如果当前栈为空，就返回</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"栈已为空，无法出栈！\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	*e = S-&gt;data[S-&gt;top];							<span class="comment">//将出栈的元素通过e返回		</span></span><br><span class="line">	S-&gt;top--;									<span class="comment">//使栈顶指针减1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-打印栈"><a href="#5-打印栈" class="headerlink" title="5.打印栈"></a>5.打印栈</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ShowStack</span><span class="params">(Sqstack *S)</span>							<span class="comment">//打印该栈</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	i = S-&gt;top;</span><br><span class="line">	<span class="keyword">if</span> (S-&gt;top == <span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"当前栈为空！\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (S-&gt;top != <span class="number">-1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"栈元素为：%d\n"</span>, S-&gt;data[S-&gt;top]);</span><br><span class="line">			(S-&gt;top)--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	S-&gt;top = i;									<span class="comment">//将原先的top指针还原</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-求栈长度"><a href="#6-求栈长度" class="headerlink" title="6.求栈长度"></a>6.求栈长度</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackLength</span><span class="params">(Sqstack *S)</span>							<span class="comment">//返回栈的元素个数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> S-&gt;top + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-求栈顶元素"><a href="#7-求栈顶元素" class="headerlink" title="7.求栈顶元素"></a>7.求栈顶元素</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GetTop</span><span class="params">(Sqstack *S, elemtype *e)</span>			<span class="comment">//得到栈顶的元素,用e返回</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (S-&gt;top == <span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"该栈为空！"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	*e = S-&gt;data[S-&gt;top];					<span class="comment">//将栈顶元素赋值给e</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-test"><a href="#8-test" class="headerlink" title="8.test"></a>8.test</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Sqstack Sq;</span><br><span class="line">	elemtype m;</span><br><span class="line">	InitStack(&amp;Sq);</span><br><span class="line">	Push(&amp;Sq, <span class="number">12</span>);</span><br><span class="line">	Push(&amp;Sq, <span class="number">49</span>);</span><br><span class="line">	Push(&amp;Sq, <span class="number">43</span>);</span><br><span class="line">	Push(&amp;Sq, <span class="number">5</span>);</span><br><span class="line">	Push(&amp;Sq, <span class="number">9</span>);</span><br><span class="line">	Push(&amp;Sq, <span class="number">22</span>);</span><br><span class="line">	ShowStack(&amp;Sq);			</span><br><span class="line">	Pop(&amp;Sq, &amp;m);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"栈顶被删除元素为：%d\n"</span>, m);</span><br><span class="line">	Pop(&amp;Sq, &amp;m);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"栈顶被删除元素为：%d\n"</span>, m);</span><br><span class="line">	ShowStack(&amp;Sq);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"当前栈中元素个数为%d\n"</span>, StackLength(&amp;Sq));</span><br><span class="line">	GetTop(&amp;Sq, &amp;m);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"栈顶元素为：%d\n"</span>, m);</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="三-两栈共享空间"><a href="#三-两栈共享空间" class="headerlink" title="三.两栈共享空间"></a>三.两栈共享空间</h1><h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1.定义"></a>1.定义</h2><ul>
+<li>将一个栈的栈底为数组的始端，即下标为0处；</li>
+</ul>
+<p>另一个栈为数组的末端，即下标为数组长度n-1处</p>
+<p>两个栈如果增加元素，就是两端点向中间延伸。</p>
+<p><img src="https://img-blog.csdnimg.cn/20190103112131932.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MTQ2MzE5Mw==,size_16,color_FFFFFF,t_70" alt></p>
+<h2 id="2-思路"><a href="#2-思路" class="headerlink" title="2.思路"></a>2.思路</h2><ul>
+<li>两个栈在数组的两端，向中间靠拢，top1和top2是栈1和栈2的栈顶指针，只要他们不见面，两个栈就能一直使用。</li>
+</ul>
+<p>栈1为空：</p>
+<p>当top1等于-1时，栈1为空</p>
+<p>栈2为空：</p>
+<p>当top2等于n时，栈2为空</p>
+<p>栈1为满：</p>
+<p>若栈2为空栈，栈1的top1等于n-1，栈1满</p>
+<p>栈2为满：</p>
+<p>若栈1为空栈，栈2的top2等于0，栈2满</p>
+<p>栈满：</p>
+<p>两个栈见面之时，即两个指针之间相差1时，top1 + 1 == top2为栈满</p>
+<h2 id="3-实现"><a href="#3-实现" class="headerlink" title="3.实现"></a>3.实现</h2><ul>
+<li><p>两栈共享空间的结构的代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*两栈共享空间结构*/</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    SElemType data[MAXSIZE];</span><br><span class="line">    <span class="keyword">int</span> top1;<span class="comment">/*栈1栈顶指针*/</span></span><br><span class="line">    <span class="keyword">int</span> top2;<span class="comment">/*栈2栈顶指针*/</span></span><br><span class="line">&#125;SqDoubleStack;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>插入代码如下</p>
+</li>
+<li><p>（stackNumber用于判断是栈1还是栈2）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*插入元素e为新的栈顶元素*/</span></span><br><span class="line"><span class="function">Status <span class="title">Push</span><span class="params">(SqDoubleStack *S, SElemType e, <span class="keyword">int</span> stackNumber)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(S-&gt;top1 + <span class="number">1</span> == S-&gt;top2)&#123;<span class="comment">/*栈已满，不能再push新元素*/</span></span><br><span class="line">        <span class="keyword">return</span> ERROR;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(stackNumber == <span class="number">1</span>)&#123;<span class="comment">/*栈1有元素进栈*/</span></span><br><span class="line">        S-&gt;data[++S-&gt;top1] = e;<span class="comment">/*若栈1则先top1+1后给数组元素赋值*/</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(stackNumber == <span class="number">2</span>)&#123;<span class="comment">/*栈2有元素进栈*/</span></span><br><span class="line">        S-&gt;data[--S-&gt;top2] = e;<span class="comment">/*若栈2则先top2-1后给数组元素赋值*/</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除元素</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*若栈不空，则删除S的栈顶元素，用e返回其值，并返回OK；否则返回ERROR*/</span></span><br><span class="line"><span class="function">Status <span class="title">Pop</span><span class="params">(SqDoubleStack *S, SElemType *e, <span class="keyword">int</span> stackNumber)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(stackNumber == <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(S-&gt;top1 == <span class="number">-1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> ERROR;<span class="comment">/*说明栈1已经是空栈，溢出*/</span></span><br><span class="line">        &#125;</span><br><span class="line">        *e = S-&gt;data[S-&gt;top1--];<span class="comment">/*将栈1的栈顶元素出栈*/</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(stackNumber == <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(S-&gt;top2 == MAXSIZE)&#123;</span><br><span class="line">            <span class="keyword">return</span> ERROR;<span class="comment">/*说明栈2已经是空栈，溢出*/</span></span><br><span class="line">        &#125;</span><br><span class="line">        *e = S-&gt;data[S-&gt;top2++];<span class="comment">/*将栈2的栈顶元素出栈*/</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>使用这种数据结构的情况通常分为两种</p>
+<ul>
+<li>当两个栈的空间需求有相反关系时，即一个栈增长另外一个栈缩短</li>
+<li>这两个栈具有相同的数据类型</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大话数据结构笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">栈</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/05/栈的顺序存储结构/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-英语名词性从句" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/26/英语名词性从句/">名词性从句</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/26/英语名词性从句/" class="archive-article-date">
+  	<time datetime="2019-10-26T03:01:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><ul>
+<li>名词性从句，指一个句子当名词来使用，放到另一个句子当中</li>
+<li>名词主要作四种成分：宾语，主语，表语，同位语</li>
+<li>从句分成四种：宾语从句，主语从句，表语从句，同位语从句<h1 id="一-宾语从句"><a href="#一-宾语从句" class="headerlink" title="一.宾语从句"></a>一.宾语从句</h1><h2 id="1-陈述句变宾语从句"><a href="#1-陈述句变宾语从句" class="headerlink" title="1.陈述句变宾语从句"></a>1.陈述句变宾语从句</h2></li>
+<li>陈述句变宾语从句，前面加that(that可以省略，不做成分)</li>
+<li>只有宾语从句that可以省略，最好别省略</li>
+<li>变化前</li>
+<li>He acknowledges      These figures are conservative</li>
+<li>变化后</li>
+<li>He acknowledges that these figures are conservative<h2 id="2-特殊疑问句变宾语从句"><a href="#2-特殊疑问句变宾语从句" class="headerlink" title="2.特殊疑问句变宾语从句"></a>2.特殊疑问句变宾语从句</h2></li>
+<li>变化前 </li>
+<li>We suddenly can’t remember      where did we put the keys just a moment ago?</li>
+<li>变化后 </li>
+<li>We suddenly can’t remember where we put the keys just a moment ago?</li>
+<li>结论：特殊疑问句变并于从句，要调整语序(疑问句变回陈述句，即把疑问句的主语提到谓语动词之前，其他不变)<h2 id="3-一般疑问句变宾语从句"><a href="#3-一般疑问句变宾语从句" class="headerlink" title="3.一般疑问句变宾语从句"></a>3.一般疑问句变宾语从句</h2></li>
+<li>变化前</li>
+<li>I don’t know   Are other clients going to abandon me, too?</li>
+<li>变化后</li>
+<li>I don’t know whether are other clients are going to abandon me,too?</li>
+<li>结论：一般疑问句变宾语从句，先调整语序（主语提前），前再加”是否”(whether或者if)<h2 id="宾语从句的位置"><a href="#宾语从句的位置" class="headerlink" title="宾语从句的位置"></a>宾语从句的位置</h2></li>
+<li>宾语从句的位置有三种，分别是及物动词后(动宾)，介词后(介宾)，形容词后.</li>
+<li>scientists believe that …..</li>
+<li>users could tell advertisers that …..</li>
+<li>he felt certain that  …..</li>
+<li>补充：除了谓语动词的及物动词后接宾语从句，非谓语动词后也可以接宾语从句</li>
+<li>但是要注意一定要是及物动词的非谓语后才可以接宾语从句</li>
+<li>补充：如果宾语从句过长，且再主谓宾补的句型种，则宾语从句后置，用形式宾语it替代<h1 id="二-表语从句"><a href="#二-表语从句" class="headerlink" title="二.表语从句"></a>二.表语从句</h1><h2 id="1-含义"><a href="#1-含义" class="headerlink" title="1.含义"></a>1.含义</h2></li>
+<li>一个句子作表语，放到另一个句子中<h2 id="2-写法"><a href="#2-写法" class="headerlink" title="2.写法"></a>2.写法</h2></li>
+<li>表语从句的写法何宾语从句一样，但连接词为that时，不作成分，也不能省略</li>
+<li>Part of the issue is that ……<h2 id="3-表语从句的位置"><a href="#3-表语从句的位置" class="headerlink" title="3.表语从句的位置"></a>3.表语从句的位置</h2></li>
+<li>表语从句位于系动词后,通常位于系动词be后</li>
+<li>补充：除作为谓语使用的系动词后可接表语从句外，作为非谓语动词的系动词后也可以接表语从句<h1 id="3-主语从句"><a href="#3-主语从句" class="headerlink" title="3.主语从句"></a>3.主语从句</h1><h1 id="1-含义-1"><a href="#1-含义-1" class="headerlink" title="1.含义"></a>1.含义</h1></li>
+<li>一个句子作主语，放到另一个句子中<h1 id="2-写法-1"><a href="#2-写法-1" class="headerlink" title="2.写法"></a>2.写法</h1></li>
+<li>主语从句写法同宾语从句，但that不作成分也不能省略，而且表示”是否”时，只能用whether，不能用if<h1 id="3-位置"><a href="#3-位置" class="headerlink" title="3.位置"></a>3.位置</h1></li>
+<li>主语从句的位置有两种：位于句首或者句尾。同一个主语从句位于两种位置时，意思相同</li>
+<li>位于句首<ul>
+<li>通常情况下为主语从句较短</li>
+</ul>
+</li>
+<li>位于句尾<ul>
+<li>主语从句过长，为避免头重脚轻，通常将主语从句后置，句首用形式主语it来代替</li>
+<li>模板：It is done + 主语从句(表达人们对一件事的观点或者看法)</li>
+<li>This year,it was proposed that the system be changed</li>
+<li>模板：It is + adj./n. + 主语从句(表达对一件事的评价)</li>
+<li>it is obvious that their views were less fully intellectualized.<h1 id="四-同位语从句"><a href="#四-同位语从句" class="headerlink" title="四.同位语从句"></a>四.同位语从句</h1><h2 id="1-含义-2"><a href="#1-含义-2" class="headerlink" title="1.含义"></a>1.含义</h2></li>
+</ul>
+</li>
+<li>一个句子作同位语，放到另一个句子（主句）中，同位语从句的作用事解释说明一个抽象名词</li>
+<li>例：So does the idea that …..</li>
+<li>idea为抽象名词，所以需要进一步解释说明它指的什么<h2 id="2-写法-2"><a href="#2-写法-2" class="headerlink" title="2.写法"></a>2.写法</h2></li>
+<li>同位语从句写法同宾语从句，但最常见的一种同位语从句是that引导的(that + 完整陈述句)，虽然that再同位语从句中不作成分，但也不能省略<h2 id="3-位置-1"><a href="#3-位置-1" class="headerlink" title="3.位置"></a>3.位置</h2></li>
+<li>同位语从句位于抽象名词后</li>
+<li>常出现的抽象名词： </li>
+<li>idea opinion fact evidence question doubt reason theory belief possibility chance hope contention guarantee</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">英语语法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">名词性从句</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/26/英语名词性从句/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-循环链表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/24/循环链表/">循环链表</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/24/循环链表/" class="archive-article-date">
+  	<time datetime="2019-10-24T03:08:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-单循环链表"><a href="#1-单循环链表" class="headerlink" title="1.单循环链表"></a>1.单循环链表</h1><ul>
+<li><p>将单链表终端的指针由空指针指向头节点，就使得整个链表形成了一个环，这种头尾相连的单链表为单循环链表，简称循环链表<br><img src="https://img-blog.csdnimg.cn/20190915235455227.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0OTQxMTE5,size_16,color_FFFFFF,t_70" alt="单项循环表"></p>
+</li>
+<li><p>合并两个任意长度的循环链表<br><img src="https://img-blog.csdn.net/20180913192207206?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2E1NzQ3ODAxOTY=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">p = rearA-&gt;next;<span class="comment">/*保存A的表头*/</span><span class="number">121</span></span><br><span class="line">rearA-&gt;next = rearB-&gt;next-&gt;next;<span class="comment">/*A表的最后一个节点指向B表的第一个节点*/</span></span><br><span class="line">q = rearB-&gt;next;<span class="comment">/*B的表头*/</span></span><br><span class="line">rearB-&gt;next = p;<span class="comment">/*B表尾指向A表头*/</span></span><br><span class="line"><span class="built_in">free</span>(q);<span class="comment">/*释放q*/</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="2-双向链表"><a href="#2-双向链表" class="headerlink" title="2.双向链表"></a>2.双向链表</h1><ul>
+<li>双向链表是在单链表的每个节点中，再设置一个指向其前驱节点的指针域</li>
+<li>再双向链表中有两个指针域，一个指向前驱，一个指向后继</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">DulNode</span>&#123;</span></span><br><span class="line">    ElemType data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">DulNode</span> *<span class="title">prior</span>;</span><span class="comment">/*直接前驱指针*/</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">DulNode</span> *<span class="title">next</span>;</span><span class="comment">/*直接后继指针*/</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdn.net/20180726122529486?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NiX2xjbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt></p>
+<ul>
+<li>添加节点(将s节点添加到p节点后)<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s-&gt;prior = p;</span><br><span class="line">s-&gt;next = p-&gt;next;</span><br><span class="line">p-&gt;next-&gt;prior = s;</span><br><span class="line">p-&gt;next = s;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20180726122558256?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NiX2xjbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt></p>
+<ul>
+<li>删除节点<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p-&gt;next-&gt;prior = p-&gt;prior;</span><br><span class="line">p-&gt;prior-&gt;next = p-&gt;next;</span><br><span class="line"><span class="built_in">free</span>(p);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20180726122545837?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NiX2xjbA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大话数据结构笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">循环链表</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/24/循环链表/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-英语定语从句" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/23/英语定语从句/">英语定语从句</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/23/英语定语从句/" class="archive-article-date">
+  	<time datetime="2019-10-22T23:46:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一-定语从句概述"><a href="#一-定语从句概述" class="headerlink" title="一.定语从句概述"></a>一.定语从句概述</h1><ul>
+<li>定语从句就是一个句子作定语，去修饰限定名词，位置要放在所修饰的名词后</li>
+<li>例如： Law is a discipline which encourage responsible judgment<ul>
+<li>翻译：法律是一门鼓励进行责任评断的学科</li>
+</ul>
+</li>
+<li>定语从句的定语是”先行词”，引导出定语从句的是”连接词”</li>
+<li>翻译时按照中文习惯，把定语放在名词前，翻译为”…的名词”</li>
+<li><strong>关系词在定语中充当成分，代替从句中跟先行词一样的成分</strong></li>
+<li>Law is a discipline which encourage responsible judgment</li>
+<li>Law is a discipline  –  a discipline encourage responsible judgment</li>
+<li>即定语从句的关系词在从句中做成分，且所做的成分与先行词一样(即关系词=先行词)<h1 id="二-定语从句的写法"><a href="#二-定语从句的写法" class="headerlink" title="二.定语从句的写法"></a>二.定语从句的写法</h1></li>
+<li>定语从句的写法是 关系词 + 陈述句 ，关键在于关系词的选择问题</li>
+<li>定语从句关系词的选择，先看先行词</li>
+<li>如果先行词是事/物，那就选物对应的关系词 which/that</li>
+<li>如果是人，就选择人对应的 who/whom/that</li>
+<li>如果表示人或物的所有关系，即”某人的”/“某物的”  whose</li>
+<li>时间 when</li>
+<li>地点 where</li>
+<li>原因 why</li>
+<li>注意以下几点<ul>
+<li>1.定语从句中的每一个关系词都必须做成分，包括that，that既可以指人也可以指物</li>
+<li>2.定语从句中先行词是”事/物”时，关系词用which和that都可以，不需要区别，考研不考</li>
+<li>3.whom指人，只能在作宾语时使用，而who和that指人可以做任何成分</li>
+<li>4.when/where/why引导定语从句时，先行词必须和与之匹配 时间/地点/原因</li>
+<li>5.关系词在定语从句中作宾语时，都可以省略<h1 id="三-定语从句的分类"><a href="#三-定语从句的分类" class="headerlink" title="三.定语从句的分类"></a>三.定语从句的分类</h1></li>
+</ul>
+</li>
+<li>定语从句分为两类<ul>
+<li>限定性定语从句   无逗号隔开</li>
+<li>非限定性定语从句 有逗号隔开</li>
+</ul>
+</li>
+<li>两者最本质的区别在于前面的先行词的范围是否明确，是否需要限定</li>
+<li>对比<ul>
+<li>he will call his friend who is working in London</li>
+<li>he will call his mother,who is working in London</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>区别</th>
+<th>限定性定语从句</th>
+<th>非限定性定语从句</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>逗号</td>
+<td>无逗号</td>
+<td>有逗号</td>
+</tr>
+<tr>
+<td>先行词</td>
+<td>范围不明确</td>
+<td>范围明确</td>
+</tr>
+<tr>
+<td>作用</td>
+<td>修饰先行词，不能省略，影响表意</td>
+<td>补充说明先行词，可以省略，不影响表意</td>
+</tr>
+<tr>
+<td>翻译</td>
+<td>往前翻译 “…的名词”</td>
+<td>不用往前翻译</td>
+</tr>
+<tr>
+<td>关系词</td>
+<td>1.关系词可以用that 2.作宾语的时候可以省略 3.指人作宾语，用whom/who/that都行</td>
+<td>1.关系词不能用that 2.不能省略 3.指人作宾语，只能用whom</td>
+</tr>
+</tbody></table>
+<h1 id="四-定语从句"><a href="#四-定语从句" class="headerlink" title="四.定语从句"></a>四.定语从句</h1><h2 id="1-限定性定语从句与同位语从句的区别"><a href="#1-限定性定语从句与同位语从句的区别" class="headerlink" title="1.限定性定语从句与同位语从句的区别"></a>1.限定性定语从句与同位语从句的区别</h2><table>
+<thead>
+<tr>
+<th>同位语从句</th>
+<th>限定性定语从句</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>解释说明n</td>
+<td>修饰限定n</td>
+</tr>
+</tbody></table>
+<ul>
+<li>从句前为抽象n则是同位语从句，不是抽象n，则是限定性定语从句</li>
+<li>n + that ，that不作从句成分为同位语从句，that作成分为限定性定语从句</li>
+<li>同位语的关系词不能省略，关系词可以省略的是限定性定语从句</li>
+</ul>
+<h2 id="2-特殊的非限定性定语从句-修饰整句话"><a href="#2-特殊的非限定性定语从句-修饰整句话" class="headerlink" title="2.特殊的非限定性定语从句(修饰整句话)"></a>2.特殊的非限定性定语从句(修饰整句话)</h2><ul>
+<li>特殊的非限定性定语从句，可以修饰前面整句话，此时关系词只能用which或as，且在句子中要作成分，as位于主句前，while位于主句后<h2 id="3-介词提前的定语从句"><a href="#3-介词提前的定语从句" class="headerlink" title="3.介词提前的定语从句"></a>3.介词提前的定语从句</h2></li>
+<li>定语从句中关系词可以提前，也可以不提前，如果提前，则不能用that，也不能省略，指人用 介词 + whom 指物用 介词 + which</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">英语语法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">定语从句</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/23/英语定语从句/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-英语状语从句" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/22/英语状语从句/">英语状语从句</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/22/英语状语从句/" class="archive-article-date">
+  	<time datetime="2019-10-21T23:56:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- TOC -->
+
+<ul>
+<li><a href="#第三节-状语从句">第三节 状语从句</a></li>
+<li><a href="#一状语从句的概述">一.状语从句的概述</a><ul>
+<li><a href="#1状语从句的含义">1.状语从句的含义</a></li>
+<li><a href="#2状语从句的写法">2.状语从句的写法</a></li>
+<li><a href="#3状语从句的位置">3.状语从句的位置</a></li>
+</ul>
+</li>
+<li><a href="#二状语从句的分类">二.状语从句的分类</a><ul>
+<li><a href="#1时间状语从句">1.时间状语从句</a></li>
+<li><a href="#2地点状语从句">2.地点状语从句</a></li>
+<li><a href="#3原因状语从句">3.原因状语从句</a></li>
+<li><a href="#4结果状语从句">4.结果状语从句</a></li>
+<li><a href="#5目的状语">5.目的状语</a></li>
+<li><a href="#6条件状语从句">6.条件状语从句</a></li>
+<li><a href="#7让步状语从句">7.让步状语从句</a></li>
+<li><a href="#8比较状语从从句">8.比较状语从=从句</a></li>
+<li><a href="#9方式状语从句">9.方式状语从句</a></li>
+<li><a href="#as-作为从属连词引导状语从句">as 作为从属连词，引导状语从句</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="第三节-状语从句"><a href="#第三节-状语从句" class="headerlink" title="第三节 状语从句"></a>第三节 状语从句</h1><h1 id="一-状语从句的概述"><a href="#一-状语从句的概述" class="headerlink" title="一.状语从句的概述"></a>一.状语从句的概述</h1><h2 id="1-状语从句的含义"><a href="#1-状语从句的含义" class="headerlink" title="1.状语从句的含义"></a>1.状语从句的含义</h2><ul>
+<li>状语从句的含义：状语从句指的一个句子做状语，表达”描述性的信息”，补充说明另一个句子（主句）。</li>
+<li>描述性的信息可分为：描述时间，地点，原因，结果，目的，条件，让步，比较，方式<h2 id="2-状语从句的写法"><a href="#2-状语从句的写法" class="headerlink" title="2.状语从句的写法"></a>2.状语从句的写法</h2></li>
+<li>状语从句的构成：一个完整的陈述句前面加一个从属连词。</li>
+<li>状语从句的种类由从属连词决定，即从属连词表示说明 逻辑关系 那么从句就是说明从句<h2 id="3-状语从句的位置"><a href="#3-状语从句的位置" class="headerlink" title="3.状语从句的位置"></a>3.状语从句的位置</h2></li>
+<li>从句的位置：主句前，中，后；同一个状语从句可以处于三种不同的位置，但意思相同。<h1 id="二-状语从句的分类"><a href="#二-状语从句的分类" class="headerlink" title="二.状语从句的分类"></a>二.状语从句的分类</h1><h2 id="1-时间状语从句"><a href="#1-时间状语从句" class="headerlink" title="1.时间状语从句"></a>1.时间状语从句</h2></li>
+<li>从属连词：when while as   </li>
+<li>含义：当……的时候</li>
+<li>例句： As the economy picks up,opportunities will abound for aspiring leaders</li>
+<li>解释：随着经济的复苏，对有抱负的领导者来说充满了机会。</li>
+<li>从属连词：before</li>
+<li>含义：在……之前</li>
+<li>从属连词：after</li>
+<li>含义：在……之后</li>
+<li>从属连词：since</li>
+<li>含义： 自从……</li>
+<li>从属连词： until</li>
+<li>含义：直到……</li>
+<li>从属连词：as soon as</li>
+<li>含义：一…就…</li>
+<li>从属连词：by the time</li>
+<li>含义：截至到…….时候</li>
+<li>从属连词：every time/ each time</li>
+<li>含义：每一次……</li>
+<li>从属连词：next time</li>
+<li>含义：下一次…….<h2 id="2-地点状语从句"><a href="#2-地点状语从句" class="headerlink" title="2.地点状语从句"></a>2.地点状语从句</h2></li>
+<li>从属连词：where</li>
+<li>含义：在……地方<h2 id="3-原因状语从句"><a href="#3-原因状语从句" class="headerlink" title="3.原因状语从句"></a>3.原因状语从句</h2></li>
+<li>从属连词：because</li>
+<li>含义：因为……</li>
+<li>从属连词：since</li>
+<li>含义：因为……</li>
+<li>从属连词：as</li>
+<li>含义：因为……</li>
+<li>从属连词：now that</li>
+<li>含义：既然/由于……<h2 id="4-结果状语从句"><a href="#4-结果状语从句" class="headerlink" title="4.结果状语从句"></a>4.结果状语从句</h2></li>
+<li>从属连词：such…that…</li>
+<li>含义：太…所以…(such后接名词或名词词组)</li>
+<li>从属连词：so…that…</li>
+<li>含义：太…所以…(so后接形容词或副词)</li>
+<li>从属连词：so that</li>
+<li>含义：所以……<h2 id="5-目的状语"><a href="#5-目的状语" class="headerlink" title="5.目的状语"></a>5.目的状语</h2></li>
+<li>从属连词：so that…/in order that…</li>
+<li>含义：目的是/为了…<h2 id="6-条件状语从句"><a href="#6-条件状语从句" class="headerlink" title="6.条件状语从句"></a>6.条件状语从句</h2></li>
+<li>从属连词：if </li>
+<li>含义：如果……</li>
+<li>从属连词：once</li>
+<li>含义：一旦……</li>
+<li>从属连词：as long as / so long as</li>
+<li>含义：只要……<h2 id="7-让步状语从句"><a href="#7-让步状语从句" class="headerlink" title="7.让步状语从句"></a>7.让步状语从句</h2></li>
+<li>让步状语从句，表示”明让步，暗转折”</li>
+<li>从属连词：although/though</li>
+<li>含义：尽管/虽然…….</li>
+<li>从属连词：even if/even though</li>
+<li>含义：即使/虽然……</li>
+<li>从属连词：while</li>
+<li>含义：虽然，尽管</li>
+<li>从属连词：however / no matter now</li>
+<li>含义：不管怎样<h2 id="8-比较状语从-从句"><a href="#8-比较状语从-从句" class="headerlink" title="8.比较状语从=从句"></a>8.比较状语从=从句</h2></li>
+<li>从属连词：than</li>
+<li>含义：和…相比较(用在比较级中)</li>
+<li>从属连词：as</li>
+<li>含义：和…相比较(用在和原级相比较)<h2 id="9-方式状语从句"><a href="#9-方式状语从句" class="headerlink" title="9.方式状语从句"></a>9.方式状语从句</h2></li>
+<li>从属连词：as</li>
+<li>含义：按照…方式/ 如同……</li>
+<li>从属连词：as if</li>
+<li>含义：似乎/好像……<h2 id="as-作为从属连词，引导状语从句"><a href="#as-作为从属连词，引导状语从句" class="headerlink" title="as 作为从属连词，引导状语从句"></a>as 作为从属连词，引导状语从句</h2></li>
+<li>只要as后引导的是完整的句子，那么它引导的一定是状语从句</li>
+<li>如果as后引导的句子不完整，则是定语从句(通常为非限定性定语从句，有逗号，修饰前面整句话)</li>
+<li>时间状语从句：当…的时候</li>
+<li>原因状语从句：因为……</li>
+<li>比较状语从句：和…相比较</li>
+<li>方式状语从句：按照…方式，如同……</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">英语语法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">状语从句</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/22/英语状语从句/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-英语特殊句式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/21/英语特殊句式/">英语特殊句式</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/21/英语特殊句式/" class="archive-article-date">
+  	<time datetime="2019-10-21T02:04:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- TOC -->
+
+<ul>
+<li><a href="#第一节-倒装">第一节 倒装</a><ul>
+<li><a href="#1全部倒装">1.全部倒装</a></li>
+<li><a href="#2部分倒装">2.部分倒装</a></li>
+</ul>
+</li>
+<li><a href="#第二节-强调">第二节 强调</a><ul>
+<li><a href="#一强调句的构成">一.强调句的构成</a></li>
+<li><a href="#二强调句的变化">二.强调句的变化</a></li>
+</ul>
+</li>
+<li><a href="#第三节-虚拟">第三节 虚拟</a><ul>
+<li><a href="#一虚拟的概述">一.虚拟的概述</a></li>
+<li><a href="#二if虚拟条件句">二.if虚拟条件句</a></li>
+<li><a href="#三名词性从句的虚拟">三.名词性从句的虚拟</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="第一节-倒装"><a href="#第一节-倒装" class="headerlink" title="第一节 倒装"></a>第一节 倒装</h1><ul>
+<li>所谓”倒装”就是把一个句子的语序颠倒</li>
+<li>可分为很多种<ul>
+<li>主谓倒装</li>
+<li>主表倒装</li>
+<li>主宾倒装</li>
+</ul>
+</li>
+<li>重点为 主谓倒装 ：主语和谓语动词顺序颠倒，即谓语动词放到主语前面</li>
+<li>主谓倒装分两种<ul>
+<li>全部倒装</li>
+<li>部分倒装<h2 id="1-全部倒装"><a href="#1-全部倒装" class="headerlink" title="1.全部倒装"></a>1.全部倒装</h2></li>
+</ul>
+</li>
+<li>全部倒装式把谓语动词全部置于主语前</li>
+<li>形容词·副词·介词短语位于句首时，句子可以倒装</li>
+<li>例如： Also unclear is why Microsoft has gone it alone<ul>
+<li>解释  同样不清楚的是为什么只有微软这样做了。</li>
+<li>正常语序 why Microsoft has gone it alone is also unclear</li>
+</ul>
+</li>
+<li>There be 句型<ul>
+<li>基本结构 there be + 名词</li>
+<li>表示 “有……” 客观存在</li>
+<li>例如 there is a girl</li>
+<li>解释 那有个女孩</li>
+<li>正常语序 a girl is there</li>
+</ul>
+</li>
+<li>There be句型的拓展<ul>
+<li>There be + 名词 + 介词短语</li>
+<li>表示”有…在那里”（介词短语表示位置）</li>
+<li>There is no gap between mind and matter</li>
+<li>介词短语 between mind and matter 表示位置 在意识和物质之间</li>
+</ul>
+</li>
+<li>There be句型还可以把be换成不同时态，；哎表示不同时间的”有”</li>
+<li>be 结合不同情态，表示不同情态下的”有”或推测”可能有”。</li>
+<li>例如 There may be more matches in the database<ul>
+<li>情态动词 may be 表示 可以有</li>
+<li>解释 可能有更多的匹配项在数据库里<h2 id="2-部分倒装"><a href="#2-部分倒装" class="headerlink" title="2.部分倒装"></a>2.部分倒装</h2></li>
+</ul>
+</li>
+<li>部分倒装就是把谓语动词的一部分置于主语前</li>
+<li>部分倒装相当于变一半疑问句</li>
+<li>只要大家把一个陈述句改为一般疑问句，那么这个一般疑问句的形式就是部分倒装</li>
+<li>(一)否定副词或词组位于句首<ul>
+<li>Never have you copy others homework</li>
+<li>正常语序 you have never copy others homework</li>
+</ul>
+</li>
+<li>(二)only位于句首<ul>
+<li>only recently did linguists begin the serious study of languages that were very different from their own</li>
+<li>正常语序 linguists begin the serious study…only recently</li>
+<li>解释 直到最近，语言学家才开始认值学习与自己母语不同的语言</li>
+</ul>
+</li>
+<li>(三)虚拟条件句省略if<ul>
+<li>虚拟条件句省略if，从句部分倒装，主句不变</li>
+<li>例如 But had company kept its word，that debate would be beside and point</li>
+<li>正常语序 but if company had kept its word</li>
+<li>解释 如果公司信守承诺，那么争议也就无关紧要了。<h1 id="第二节-强调"><a href="#第二节-强调" class="headerlink" title="第二节 强调"></a>第二节 强调</h1></li>
+</ul>
+</li>
+<li>一个句子中的包含多个信息，如果想要把重要的信息准确地传递，就需要强调</li>
+<li>在书面语中，表示强调用强调句<h2 id="一-强调句的构成"><a href="#一-强调句的构成" class="headerlink" title="一.强调句的构成"></a>一.强调句的构成</h2></li>
+<li>强调句的基本结构: it is … that…</li>
+<li>写法：把一个句子拆成两部分，把”想强调的部分”放到 it is…that…的中间，把句子余下的部分放到that后面，就成的强调句</li>
+<li><strong>注意</strong>： 不能强调形容词和动词</li>
+<li>例如：<ul>
+<li>强调前 </li>
+<li>We hear the more honest argument only in recent years</li>
+<li>强调后</li>
+<li>It is only in recent years that we hear the honest argument</li>
+<li>解释 只有在最近几年，我们才听到这种比较诚实的论点</li>
+</ul>
+</li>
+<li>强调句不仅可以强调词或词组，也可以强调从句<h2 id="二-强调句的变化"><a href="#二-强调句的变化" class="headerlink" title="二.强调句的变化"></a>二.强调句的变化</h2></li>
+<li>强调现在的事用 is 强调过去的事用 was</li>
+<li>即 It is/was…that/who…</li>
+<li>强调句中，不论强调声明成分，都可以用that，如果强调的是人,可以用who代替that</li>
+<li><strong>注意</strong>：出现 It is …that…结构不一定是强调句，也可能是主语从句（后置），有两种方法区别：<ul>
+<li>根据强调句的原理：如果去掉”It is … that …”，余下部分还能构成一个完整的句子，即为强调句，反之，则为主语从句后置</li>
+<li>如果”It is …that…”中间是形容词或动词，则为主语从句后置，因为强调句不能强调形容词或动词<h1 id="第三节-虚拟"><a href="#第三节-虚拟" class="headerlink" title="第三节 虚拟"></a>第三节 虚拟</h1><h2 id="一-虚拟的概述"><a href="#一-虚拟的概述" class="headerlink" title="一.虚拟的概述"></a>一.虚拟的概述</h2></li>
+</ul>
+</li>
+<li>1.声明式虚拟<ul>
+<li>虚拟 顾名思义 就是 非真实，主要分成两种情况</li>
+<li>一 是与真实情况进行比较，发现这个事情不是真的，与真实情况不符</li>
+<li>二 是与假设的情况进行比较，发现即使是假设，这个情况也不太可能成真</li>
+</ul>
+</li>
+<li>2.如何表达虚拟<ul>
+<li>虚拟 是谓语动词的一种特殊变化，通过把谓语动词 改变时态 ，即可表达虚拟</li>
+</ul>
+</li>
+<li>3.虚拟用在哪里<ul>
+<li>考察if虚拟条件句和名词性从句的虚拟<h2 id="二-if虚拟条件句"><a href="#二-if虚拟条件句" class="headerlink" title="二.if虚拟条件句"></a>二.if虚拟条件句</h2></li>
+</ul>
+</li>
+<li>if条件句分为两种：真实条件句和虚拟条件句</li>
+<li>如果假设的事情不是真的或不太可能成真，就要虚拟，用虚拟条件句</li>
+</ul>
+<p><img src="if%E8%99%9A%E6%8B%9F%E5%8F%A5%E5%9B%BE.png" alt="if虚拟句图"></p>
+<ul>
+<li>三句口诀：从句往前推，主句四加一，将来同现在<ul>
+<li>主句往前推：表达虚拟时，要把从句往前推一个时态（注意：如果从去往前推，变成一般过去时，如果时be动词，只能用were，不能用was，无论主语是谁）</li>
+<li>主句四加一: 其中 四 指的是主语种谓语动词的形式都用这四个情态动词（would，could，should，might)</li>
+<li>将来同现在：假设将来的事情和假设现在的事情的虚拟是完全相同的<h2 id="三-名词性从句的虚拟"><a href="#三-名词性从句的虚拟" class="headerlink" title="三.名词性从句的虚拟"></a>三.名词性从句的虚拟</h2></li>
+</ul>
+</li>
+<li>名词性从句包括四种:主语从句，宾语从句，表语从句，同位语从句</li>
+<li>只要对应主句中有表示”命令””要求””建议”的词（无论词性），名词性从句都需要虚拟</li>
+<li>名词性从句的虚拟要把谓语动词变成”shoould + 动词原形”，并且should可以省略</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">英语语法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">特殊句式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/21/英语特殊句式/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-静态链表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/12/静态链表/">静态链表</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/12/静态链表/" class="archive-article-date">
+  	<time datetime="2019-10-12T06:58:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- TOC -->
+
+<ul>
+<li><a href="#1静态链表的概念">1.静态链表的概念</a></li>
+<li><a href="#2静态链表的插入操作">2.静态链表的插入操作</a></li>
+<li><a href="#3静态链表的删除">3.静态链表的删除</a></li>
+<li><a href="#4查看静态链表长度">4.查看静态链表长度</a></li>
+<li><a href="#5静态链表的优缺点">5.静态链表的优缺点</a></li>
+</ul>
+<!-- /TOC -->
+<h1 id="1-静态链表的概念"><a href="#1-静态链表的概念" class="headerlink" title="1.静态链表的概念"></a>1.静态链表的概念</h1><ul>
+<li>用数组描述的链表叫做静态链表</li>
+<li>我们让数组元素由两个数据域组成，data和cur，也就是数组的每一个下标都对应一个data和cur，数据域data用来存放数据元素，cur相当于单链表中的next指针，存放该元素后继在数组中的下标，我们把cur叫做游标</li>
+</ul>
+<p><img src="%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8.jpg" alt="静态链表"></p>
+<ul>
+<li><p>为了方便插入数据，我们通常会把数组建的大一些，以便有空间插入，不会溢出</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 1000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> OK 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ERROR 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TRUE 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FALSE 0</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> Status;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	ElemType data;</span><br><span class="line">	<span class="keyword">int</span> cur;</span><br><span class="line">&#125;Componet,StaticList[MAXSIZE];</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>初始化数组</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*将一维数组space中各个分量链成一备用表*/</span></span><br><span class="line"><span class="comment">/*space[0].cur为头指针，"0"表示空指针*/</span> </span><br><span class="line"><span class="function">Status <span class="title">InitList</span><span class="params">(StaticList space)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; MAXSIZE - <span class="number">1</span>; i++ )&#123;</span><br><span class="line">		space[i].cur = i + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	space[MAXSIZE - <span class="number">1</span>].cur = <span class="number">0</span>;<span class="comment">/*当前静态链表尾空，最后一个元素的cur为0*/</span></span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="2-静态链表的插入操作"><a href="#2-静态链表的插入操作" class="headerlink" title="2.静态链表的插入操作"></a>2.静态链表的插入操作</h1><ul>
+<li>静态链表中要解决的问题：如何用静态模拟动态链表结构的存储空间的分配，需要时申请，无用时释放</li>
+<li>解决的办法是将所有为使用以及被删除的分量用游标链成一个备用链表，每当插入时，就可以从备用链表上取得第一个节点作为待插入的新节点<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*若备用空间链表非空，则返回分配的结点下标，否则返回0*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">malloc_sll</span><span class="params">(StaticList space)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="comment">/*当前数组第一个元素的cur存的值*/</span></span><br><span class="line">	<span class="comment">/*就是要返回的第一个备用空间的下标*/</span> </span><br><span class="line">	i = space[<span class="number">0</span>].cur;</span><br><span class="line">	<span class="keyword">if</span>(space[<span class="number">0</span>].cur)&#123;</span><br><span class="line">		space[<span class="number">0</span>].cur = space[i].cur;<span class="comment">/*备用空间的cur的下一个cur的值*/</span> </span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*在L中第i个元素之前插入新的数据元素e*/</span></span><br><span class="line"><span class="function">Status <span class="title">ListInsert</span><span class="params">(StaticList L,<span class="keyword">int</span> i,ElemType e)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> j,k,l;</span><br><span class="line">	k = MAXSIZE - <span class="number">1</span>;<span class="comment">/*k为最后一个数据元素的下标*/</span> </span><br><span class="line">	<span class="keyword">if</span>(i &lt; <span class="number">0</span> || i &gt;ListLength(L) + <span class="number">1</span> )&#123;<span class="comment">//见4.查看链表长度</span></span><br><span class="line">		<span class="keyword">return</span> ERROR;</span><br><span class="line">	&#125; </span><br><span class="line">	j = malloc_sll(L);<span class="comment">/*获取空闲分量的下标*/</span></span><br><span class="line">	<span class="keyword">if</span>(j)&#123;</span><br><span class="line">		L[j].data = e;</span><br><span class="line">		<span class="comment">/*找到第i个元素之前的位置*/</span></span><br><span class="line">		<span class="keyword">for</span>(l = <span class="number">1</span>;l &lt;= i <span class="number">-1</span>;l++)&#123;</span><br><span class="line">			k = L[k].cur;</span><br><span class="line">		&#125;</span><br><span class="line">		L[j].cur = L[k].cur;<span class="comment">/*插入元素的cur等于插入位置前一个元素的cur*/</span></span><br><span class="line">		L[k].cur = j;<span class="comment">/*前一个元素的cur等于插入元素的cur*/</span></span><br><span class="line">		<span class="keyword">return</span> OK;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">return</span> ERROR;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-静态链表的删除"><a href="#3-静态链表的删除" class="headerlink" title="3.静态链表的删除"></a>3.静态链表的删除</h1><ul>
+<li>删除元素时，原来时需要释放节点的函数free()，我们自己实现</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*删除L中第i个数据元素e*/</span></span><br><span class="line"><span class="function">Status <span class="title">ListDelete</span><span class="params">(StaticList L,<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> j,k;</span><br><span class="line">	<span class="keyword">if</span>(i &lt; <span class="number">0</span> || i &gt; ListLength(L))&#123;</span><br><span class="line">		<span class="keyword">return</span> ERROR;</span><br><span class="line">	&#125;</span><br><span class="line">	k = MAXSIZE - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(j = <span class="number">1</span>; j &lt;= i - <span class="number">1</span>;j++)&#123;</span><br><span class="line">		k = L[k].cur;</span><br><span class="line">	&#125;</span><br><span class="line">	j = L[k].cur;<span class="comment">/*i位置的下标*/</span></span><br><span class="line">	L[k].cur = L[j].cur;</span><br><span class="line">	Free_SSL(L,j);</span><br><span class="line">	<span class="keyword">return</span> OK; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*将空闲节点回收到备用节点*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Free_SSL</span><span class="params">(StaticList space,<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">	space[k].cur = space[<span class="number">0</span>].cur;<span class="comment">/*把第一个元素的下一个位置的下标赋值给空闲位置的下一个位置的下标*/</span></span><br><span class="line">	space[<span class="number">0</span>].cur = k;<span class="comment">/*第一个元素的下一个位置的小标为空闲位置的下标*/</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-查看静态链表长度"><a href="#4-查看静态链表长度" class="headerlink" title="4.查看静态链表长度"></a>4.查看静态链表长度</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*返回L中数据元素的个数*/</span></span><br><span class="line"><span class="function">Status <span class="title">ListLength</span><span class="params">(StaticList L)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = L[MAXSIZE - <span class="number">1</span>].cur;</span><br><span class="line">	<span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(i)&#123;</span><br><span class="line">		i = L[i].cur;</span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> j;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="5-静态链表的优缺点"><a href="#5-静态链表的优缺点" class="headerlink" title="5.静态链表的优缺点"></a>5.静态链表的优缺点</h1><ul>
+<li>优点<ul>
+<li>在插入和删除操作时只需要修改游标，不需要移动元素，从而改进了顺序存储结构中的插入和删除操作需要移动大量元素的缺点</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>没有解决连续存储分配带来的表长难以缺点的问题</li>
+<li>失去了顺序存储结构随机存储的特性</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大话数据结构笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c语言</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/12/静态链表/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-马思瑞电影口语课笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -176,7 +1264,221 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <!-- TOC -->
+
+<ul>
+<li><a href="#1day1">1.day1</a></li>
+<li><a href="#2day2">2.day2</a></li>
+<li><a href="#3day3">3.day3</a></li>
+<li><a href="#4day4">4.day4</a></li>
+<li><a href="#5day5">5.day5</a></li>
+<li><a href="#6day6">6.day6</a></li>
+<li><a href="#%E7%88%B1%E4%B9%90%E4%B9%8B%E5%9F%8Eday1">爱乐之城.day1</a></li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="1-day1"><a href="#1-day1" class="headerlink" title="1.day1"></a>1.day1</h1><ul>
+<li>not to mention 更不必提<ul>
+<li>I can’t even take care of myself,not to mention a dog.</li>
+<li>我连自己都照顾不好，更别提照顾狗了</li>
+</ul>
+</li>
+<li>drop somebody off at … 让某人在…下车<ul>
+<li>please drop me off at the drop-off zone.</li>
+<li>drop-off 下客区</li>
+<li>请把我在下客区下车</li>
+</ul>
+</li>
+<li>pick somebody up at… 在…接某人<ul>
+<li>please pick me up at the pick-up zone.</li>
+<li>pick-up zone 接客区</li>
+<li>请在接客区接我</li>
+</ul>
+</li>
+<li>sharp 精神，利索（形容男性），也有准时的意思<ul>
+<li>man，you look so sharp.</li>
+<li>let’s meet at 11 o’clock sharp</li>
+</ul>
+</li>
+<li>gotta start somewhere 从一个地方开始<ul>
+<li>we all gotta start somewhere,cheer up! </li>
+</ul>
+</li>
+<li>errands 杂事儿，跑腿<ul>
+<li>can you run an errands for me?</li>
+</ul>
+</li>
+<li>deal with 处理<ul>
+<li>I’ve been dealing with a lot of stuff at work lately.</li>
+</ul>
+</li>
+<li>off the hook<ul>
+<li>Finally,I’m off the hook.</li>
+<li>I’m gonna let you off the hook.</li>
+<li>我会放过你的</li>
+</ul>
+</li>
+<li>ringing off the hook 电话响个不停<ul>
+<li>the phone is ringing off the hook<h1 id="2-day2"><a href="#2-day2" class="headerlink" title="2.day2"></a>2.day2</h1></li>
+</ul>
+</li>
+<li>would kill for sth 非常想要某样物品<ul>
+<li>a million girls would kill for that job.</li>
+</ul>
+</li>
+<li>on board 赞成<ul>
+<li>I’m on board </li>
+<li>算我一个</li>
+</ul>
+</li>
+<li>tough call 艰难的抉择<ul>
+<li>It’s a tough call</li>
+</ul>
+</li>
+<li>you know what? 你知道吗<ul>
+<li>you know what? I’m not coming to work tommorrow</li>
+</ul>
+</li>
+<li>open a lot off doors 提供了很多机遇<ul>
+<li>It opens a lot of doors.</li>
+</ul>
+</li>
+<li>pick on somebody 找某人的麻烦<ul>
+<li>miranda is picking on you。</li>
+</ul>
+</li>
+<li>screw up 搞砸<ul>
+<li>I screwed it up.<h1 id="3-day3"><a href="#3-day3" class="headerlink" title="3.day3"></a>3.day3</h1></li>
+</ul>
+</li>
+<li>not a chance? 没机会吗<ul>
+<li>not chance </li>
+<li>没门</li>
+</ul>
+</li>
+<li>beat somebody to the punch 先发制人<ul>
+<li>you’d better bear him to the punch.</li>
+</ul>
+</li>
+<li>Just a case 以防万一<ul>
+<li>Honey，take an umbrella in case it rains.</li>
+</ul>
+</li>
+<li>that’s a big of you 你真伟大啊（贬义）</li>
+<li>It doesn’t make sence 这说不通<ul>
+<li>It does’t make sence throwing away all those months of hard work.</li>
+</ul>
+</li>
+<li>hang by a thread 岌岌可危<ul>
+<li>our friendship is hanging by a thread.</li>
+</ul>
+</li>
+<li>Join the club 彼此彼此<h1 id="4-day4"><a href="#4-day4" class="headerlink" title="4.day4"></a>4.day4</h1></li>
+<li>where are we on something? 询问某件事情进行到哪里了<ul>
+<li>where are we on the trip planning?</li>
+<li>行程计划怎么样了？</li>
+</ul>
+</li>
+<li>for crying out loud? 搞什么名堂（不耐烦的一种表现）哎呀（生气时的叹词）<ul>
+<li>For crying out loud,turn off your music.</li>
+<li>拜托你赶紧关掉你的音乐吧</li>
+</ul>
+</li>
+<li>be in business 准备就绪<ul>
+<li>Just restart you computer and you are in business.</li>
+<li>重启电脑就搞定了</li>
+</ul>
+</li>
+<li>the choice is yours 决定权在你手上<ul>
+<li>It’s yours life,the choice is yours.</li>
+</ul>
+</li>
+<li>deserve 应得</li>
+<li>stylish | chic 时髦的，潇洒的，有风度的<ul>
+<li>she looks so stylish<h1 id="5-day5"><a href="#5-day5" class="headerlink" title="5.day5"></a>5.day5</h1></li>
+</ul>
+</li>
+<li>put sb up for 推荐某人去<ul>
+<li>she put me for it </li>
+<li>她推荐我去的</li>
+</ul>
+</li>
+<li>agree with sb/sth 同意某人或某事<ul>
+<li>There are things Miranda does that I don’t agree with</li>
+</ul>
+</li>
+<li>call the shots 发号施令，操纵<ul>
+<li>I call the shots here 这里我说了算</li>
+<li>Take a shot？ 要试以下吗？</li>
+</ul>
+</li>
+<li>give it a shot 尝试一下<ul>
+<li>just give a shot</li>
+</ul>
+</li>
+<li>split up 分裂，分离<ul>
+<li>Nate and I just split up a couple days ago</li>
+</ul>
+</li>
+<li>lose your mind 失去理智<ul>
+<li>Have you completely lost your mind?</li>
+</ul>
+</li>
+<li>pay sb/sth back 偿还，报复 某人 某事<ul>
+<li>when the time is right，she will pay me back<h1 id="6-day6"><a href="#6-day6" class="headerlink" title="6.day6"></a>6.day6</h1></li>
+</ul>
+</li>
+<li>jump at sth 雀跃<ul>
+<li>she jumped at the opportunity to work with Steven Spielberg.</li>
+</ul>
+</li>
+<li>get ahead 超过，超越，赶在了前面<ul>
+<li>the best way to get ahead is through hard work</li>
+</ul>
+</li>
+<li>ridiculous 荒谬的<ul>
+<li>Don’t be ridiculous 别逗了</li>
+</ul>
+</li>
+<li>turn one’s back on sb 不理睬，背叛，放弃<ul>
+<li>I turn my back on my friends and my family</li>
+</ul>
+</li>
+<li>figure out 解决，理解，想出<ul>
+<li>If I have a map,I will figure it out.</li>
+</ul>
+</li>
+<li>a favor 一个小忙<ul>
+<li>I have a favor to ask you.</li>
+</ul>
+</li>
+<li>have some large(big) shoes to fill 任重道远<ul>
+<li>you have some very large shoes to fill<h1 id="爱乐之城-day1"><a href="#爱乐之城-day1" class="headerlink" title="爱乐之城.day1"></a>爱乐之城.day1</h1></li>
+</ul>
+</li>
+<li>running low 不足，缺乏<ul>
+<li>Money is running low</li>
+</ul>
+</li>
+<li>wrecked 伶仃大醉 tipsy 微醺<ul>
+<li>she was completely wrecked.</li>
+</ul>
+</li>
+<li>在物品后面加 please 礼貌的表示自己要这个东西<ul>
+<li>can you give me a water,please?</li>
+</ul>
+</li>
+<li>on us 算在我们头上，我们请客 on the house 免费<ul>
+<li>The tickets are on me</li>
+</ul>
+</li>
+<li>how did sth go 事情进展如何<ul>
+<li>How did the interview go？</li>
+</ul>
+</li>
+<li>Same here 我也是</li>
+</ul>
+
       
 
       
@@ -244,6 +1546,11 @@
 <li><a href="#1线性表的链式存储结构定义">1.线性表的链式存储结构定义</a></li>
 <li><a href="#2头节点与头指针的异同">2.头节点与头指针的异同</a></li>
 <li><a href="#3线性表链式存储结构代码描述">3.线性表链式存储结构代码描述</a></li>
+<li><a href="#4单链表的整表创建">4.单链表的整表创建</a></li>
+<li><a href="#5单链表的读取">5.单链表的读取</a></li>
+<li><a href="#6单链表的插入与删除">6.单链表的插入与删除</a></li>
+<li><a href="#7单链表的整表删除">7.单链表的整表删除</a></li>
+<li><a href="#8单链表与顺序存储结构优缺点">8.单链表与顺序存储结构优缺点</a></li>
 </ul>
 <!-- /TOC -->
         
@@ -261,11 +1568,19 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大话数据结构笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">线性表</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c语言</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
         		</li>
       		
 		</ul>
@@ -398,677 +1713,9 @@
 
 
   
-    <article id="post-leetcode-数组-简单-66-88-118-119-121-122" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/07/leetcode-数组-简单-66-88-118-119-121-122/">leetcode-数组-简单-66-88-118-119-121-122</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/07/leetcode-数组-简单-66-88-118-119-121-122/" class="archive-article-date">
-  	<time datetime="2019-09-07T09:36:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- TOC -->
-
-<ul>
-<li><a href="#66-加一">66. 加一</a></li>
-<li><a href="#88-合并两个有序数组">88. 合并两个有序数组</a></li>
-<li><a href="#118-杨辉三角">118. 杨辉三角</a></li>
-<li><a href="#杨辉三角的性质">杨辉三角的性质</a></li>
-<li><a href="#119-杨辉三角-ii2">119. 杨辉三角 II2</a></li>
-<li><a href="#121-买卖股票的最佳时机">121. 买卖股票的最佳时机</a></li>
-<li><a href="#122-买卖股票的最佳时机-ii">122. 买卖股票的最佳时机 II</a></li>
-</ul>
-<!-- /TOC -->
-<h1 id="66-加一"><a href="#66-加一" class="headerlink" title="66. 加一"></a>66. 加一</h1><p><a href="https://leetcode-cn.com/problems/plus-one/" target="_blank" rel="noopener">题目传送</a><br>题目描述：给定一个由整数组成的非空数组所表示的非负整数，在该数的基础上加一。</p>
-<p>最高位数字存放在数组的首位， 数组中每个元素只存储单个数字。</p>
-<p>你可以假设除了整数 0 之外，这个整数不会以零开头。</p>
-<p>示例 1:</p>
-<p>输入: [1,2,3]<br>输出: [1,2,4]<br>解释: 输入数组表示数字 123。<br>示例 2:</p>
-<p>输入: [4,3,2,1]<br>输出: [4,3,2,2]<br>解释: 输入数组表示数字 4321。</p>
-<p>思路：从数组中的第最后一个个元素开始判断有多少个9，如果等于9就该位置元素等于0，如果不等于9则该元素位置大小加1，并终止循环，如果全是9，则动态创建一个数组比原数组大一个空间，且第一个元素为1，其他全为0</p>
-        
-          <a class="article-more-a" href="/2019/09/07/leetcode-数组-简单-66-88-118-119-121-122/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">leetcode</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">简单</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/07/leetcode-数组-简单-66-88-118-119-121-122/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-leetcode-数组-简单-1-26-27-35-53" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/06/leetcode-数组-简单-1-26-27-35-53/">leetcode-数组-简单-1-26-27-35-53</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/06/leetcode-数组-简单-1-26-27-35-53/" class="archive-article-date">
-  	<time datetime="2019-09-06T10:02:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- TOC -->
-
-<ul>
-<li><a href="#1两数之和">1.两数之和</a></li>
-<li><a href="#26-删除排序数组中的重复项">26. 删除排序数组中的重复项</a></li>
-<li><a href="#27-移除元素">27. 移除元素</a></li>
-<li><a href="#35-搜索插入位置">35. 搜索插入位置</a></li>
-<li><a href="#53-最大子序和">53. 最大子序和</a></li>
-</ul>
-<!-- /TOC -->
-        
-          <a class="article-more-a" href="/2019/09/06/leetcode-数组-简单-1-26-27-35-53/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">leetcode</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">简单</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/06/leetcode-数组-简单-1-26-27-35-53/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-java编程思想" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/04/java编程思想/">java编程思想</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/04/java编程思想/" class="archive-article-date">
-  	<time datetime="2019-09-04T00:43:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- TOC -->
-
-<ul>
-<li><a href="#1%E5%AF%B9%E8%B1%A1%E5%AF%BC%E8%AE%BA">1.对象导论</a></li>
-</ul>
-<!-- /TOC -->
-        
-          <a class="article-more-a" href="/2019/09/04/java编程思想/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/04/java编程思想/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-java程序设计基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/03/java程序设计基础/">java程序设计基础</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/03/java程序设计基础/" class="archive-article-date">
-  	<time datetime="2019-09-03T06:08:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- TOC -->
-
-<ul>
-<li><a href="#一java概述">一.java概述</a></li>
-<li><a href="#二配置环境">二.配置环境</a></li>
-<li><a href="#三jre和jdk的区别">三.JRE和JDK的区别</a></li>
-<li><a href="#四java的helloworld">四.java的helloworld</a></li>
-<li><a href="#5多态的三大特性">5.多态的三大特性</a></li>
-<li><a href="#6java为什么不用多继承">6.java为什么不用多继承</a></li>
-<li><a href="#7抽象类">7.抽象类</a></li>
-<li><a href="#8接口">8.接口</a></li>
-<li><a href="#9抽象类和接口的几点区别">9.抽象类和接口的几点区别</a></li>
-<li><a href="#10hashset中插入自定义person对象">10.hashSet中插入自定义Person对象</a></li>
-<li><a href="#作用哪些情况下会对对象的相等性进行判断跟踪查看jdk源码研究hashsetadd方法内部实现的细节">作用：哪些情况下会对对象的相等性进行判断？跟踪查看JDK源码，研究hashset.add方法内部实现的细节</a></li>
-</ul>
-<!-- /TOC -->
-        
-          <a class="article-more-a" href="/2019/09/03/java程序设计基础/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/03/java程序设计基础/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-算法分析与设计实践" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/02/算法分析与设计实践/">算法分析与设计实践</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/02/算法分析与设计实践/" class="archive-article-date">
-  	<time datetime="2019-09-02T10:00:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- TOC -->
-
-<ul>
-<li><a href="#一算法分析基础">一.算法分析基础</a></li>
-<li><a href="#二算法基本工具和优化技巧">二.算法基本工具和优化技巧</a><ul>
-<li><a href="#1循环与递归">1.循环与递归</a></li>
-<li><a href="#2算法与数据结构">2.算法与数据结构</a></li>
-<li><a href="#3算法优化基本技巧">3.算法优化基本技巧</a></li>
-</ul>
-</li>
-<li><a href="#三基本">三.基本</a></li>
-</ul>
-<!-- /TOC -->
-
-<h1 id="一-算法分析基础"><a href="#一-算法分析基础" class="headerlink" title="一.算法分析基础"></a>一.算法分析基础</h1><ul>
-<li><p>算法是计算机是计算机学科的灵魂</p>
-</li>
-<li><p>是研究计算机法的规律和方法</p>
-</li>
-<li><p>1.1用计算机求解问题的步骤</p>
-<ul>
-<li>1.问题分析</li>
-<li>2.数学模型建立</li>
-<li>3.算法设计与选择</li>
-<li>4.算法表示：算法流程图，盒图，PAD图和伪码</li>
-<li>5.算法实现</li>
-<li>6.程序调试：白盒测试对算法的各个分支进行测试；黑盒测试检验对给定的输入是否有指定输出</li>
-</ul>
-</li>
-<li><p>1.2算法表示方法</p>
-<ul>
-<li>1.顺序型</li>
-<li>2.选择型</li>
-<li>3.当型循环型</li>
-<li>4.多情况选择型<h1 id="二-算法基本工具和优化技巧"><a href="#二-算法基本工具和优化技巧" class="headerlink" title="二.算法基本工具和优化技巧"></a>二.算法基本工具和优化技巧</h1><h2 id="1-循环与递归"><a href="#1-循环与递归" class="headerlink" title="1.循环与递归"></a>1.循环与递归</h2></li>
-</ul>
-</li>
-<li><p>1.设计中注意算法效率</p>
-</li>
-<li><p>2.“自顶向下”的设计方法</p>
-<ul>
-<li><h2 id="2-算法与数据结构"><a href="#2-算法与数据结构" class="headerlink" title="2.算法与数据结构"></a>2.算法与数据结构</h2><h2 id="3-算法优化基本技巧"><a href="#3-算法优化基本技巧" class="headerlink" title="3.算法优化基本技巧"></a>3.算法优化基本技巧</h2><h1 id="三-基本"><a href="#三-基本" class="headerlink" title="三.基本"></a>三.基本</h1></li>
-</ul>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">算法课程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/02/算法分析与设计实践/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-tp5学习记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/29/tp5学习记录/">tp5学习记录</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/29/tp5学习记录/" class="archive-article-date">
-  	<time datetime="2019-08-29T03:18:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- TOC -->
-
-<ul>
-<li><a href="#1环境搭建">1.环境搭建</a></li>
-<li><a href="#2访问替换更改入口文件">2.访问替换，更改入口文件</a></li>
-<li><a href="#3控制器">3.控制器</a></li>
-<li><a href="#4页面的css样式">4.页面的css样式</a></li>
-<li><a href="#5连接数据库">5.连接数据库</a></li>
-<li><a href="#6tp5语法">6.tp5语法</a></li>
-<li><a href="#7踩坑记录">7.踩坑记录</a></li>
-</ul>
-        
-          <a class="article-more-a" href="/2019/08/29/tp5学习记录/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">thinkphp5</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/29/tp5学习记录/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-马思瑞的美式口语课程笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/27/马思瑞的美式口语课程笔记/">马思瑞的美式口语课程笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/27/马思瑞的美式口语课程笔记/" class="archive-article-date">
-  	<time datetime="2019-08-27T15:19:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- TOC -->
-
-<ul>
-<li><a href="#1单元音上">1.单元音(上)</a></li>
-<li><a href="#2单元音下">2.单元音(下)</a></li>
-<li><a href="#3双元音">3.双元音</a></li>
-<li><a href="#4辅音上">4.辅音(上)</a></li>
-<li><a href="#5辅音下">5.辅音(下)</a></li>
-<li><a href="#6音节与重音">6.音节与重音</a></li>
-<li><a href="#7闪音">7.闪音</a></li>
-<li><a href="#8喉塞音">8.喉塞音</a></li>
-<li><a href="#9清音不送气">9.清音不送气</a></li>
-<li><a href="#10清清浊浊">10.清清浊浊</a></li>
-<li><a href="#11辅元连读">11.辅元连读</a></li>
-<li><a href="#12辅辅连读">12.辅辅连读</a></li>
-<li><a href="#13元元连读">13.元元连读</a></li>
-<li><a href="#14同化现象">14.同化现象</a></li>
-<li><a href="#15缩读">15.缩读</a></li>
-<li><a href="#16重读与弱读">16.重读与弱读</a></li>
-<li><a href="#17语调">17.语调</a></li>
-</ul>
-<!-- /TOC -->
-        
-          <a class="article-more-a" href="/2019/08/27/马思瑞的美式口语课程笔记/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">英语</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/27/马思瑞的美式口语课程笔记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1183,7 +1830,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">大话数据结构笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">循环链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">thinkphp5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">算法课程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1195,11 +1858,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">英语语法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">定语从句</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">名词性从句</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">坑</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">thinkphp5</a>
+                <a href="javascript:void(0)" class="js-tag color5">特殊句式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">状语从句</a>
               </li>
              
               <li class="article-tag-list-item">

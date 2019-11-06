@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>线性表的链式存储结构 | Winter blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.线性表的链式存储结构定义 2.头节点与头指针的异同 3.线性表链式存储结构代码描述">
-<meta name="keywords" content="线性表,c语言">
+  <meta name="description" content="1.线性表的链式存储结构定义 2.头节点与头指针的异同 3.线性表链式存储结构代码描述 4.单链表的整表创建 5.单链表的读取 6.单链表的插入与删除 7.单链表的整表删除 8.单链表与顺序存储结构优缺点">
+<meta name="keywords" content="大话数据结构笔记,线性表,c语言,链表">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线性表的链式存储结构">
 <meta property="og:url" content="http://yoursite.com/2019/09/19/线性表的链式存储结构/index.html">
 <meta property="og:site_name" content="Winter blog">
-<meta property="og:description" content="1.线性表的链式存储结构定义 2.头节点与头指针的异同 3.线性表链式存储结构代码描述">
+<meta property="og:description" content="1.线性表的链式存储结构定义 2.头节点与头指针的异同 3.线性表链式存储结构代码描述 4.单链表的整表创建 5.单链表的读取 6.单链表的插入与删除 7.单链表的整表删除 8.单链表与顺序存储结构优缺点">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2019/09/19/线性表的链式存储结构/%E5%8D%95%E9%93%BE%E8%A1%A8.jpg">
-<meta property="og:updated_time" content="2019-10-07T10:43:00.272Z">
+<meta property="og:updated_time" content="2019-10-24T03:07:24.531Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线性表的链式存储结构">
-<meta name="twitter:description" content="1.线性表的链式存储结构定义 2.头节点与头指针的异同 3.线性表链式存储结构代码描述">
+<meta name="twitter:description" content="1.线性表的链式存储结构定义 2.头节点与头指针的异同 3.线性表链式存储结构代码描述 4.单链表的整表创建 5.单链表的读取 6.单链表的插入与删除 7.单链表的整表删除 8.单链表与顺序存储结构优缺点">
 <meta name="twitter:image" content="http://yoursite.com/2019/09/19/线性表的链式存储结构/%E5%8D%95%E9%93%BE%E8%A1%A8.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Winter blog" type="application/atom+xml">
@@ -187,6 +187,11 @@
 <li><a href="#1线性表的链式存储结构定义">1.线性表的链式存储结构定义</a></li>
 <li><a href="#2头节点与头指针的异同">2.头节点与头指针的异同</a></li>
 <li><a href="#3线性表链式存储结构代码描述">3.线性表链式存储结构代码描述</a></li>
+<li><a href="#4单链表的整表创建">4.单链表的整表创建</a></li>
+<li><a href="#5单链表的读取">5.单链表的读取</a></li>
+<li><a href="#6单链表的插入与删除">6.单链表的插入与删除</a></li>
+<li><a href="#7单链表的整表删除">7.单链表的整表删除</a></li>
+<li><a href="#8单链表与顺序存储结构优缺点">8.单链表与顺序存储结构优缺点</a></li>
 </ul>
 <!-- /TOC -->
 <a id="more"></a>
@@ -218,11 +223,103 @@
 </ul>
 <h1 id="3-线性表链式存储结构代码描述"><a href="#3-线性表链式存储结构代码描述" class="headerlink" title="3.线性表链式存储结构代码描述"></a>3.线性表链式存储结构代码描述</h1><ul>
 <li>线性表的单链表存储结构</li>
-<li>节点有存放元素的数据域和存放后继节点的指针域组成<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Linklist</span>&#123;</span></span><br><span class="line">	ElemType data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Linklist</span> *<span class="title">node</span>;</span></span><br><span class="line">&#125;Lnode,*Linklist;</span><br></pre></td></tr></table></figure>
+<li>节点有存放元素的数据域和存放后继节点的指针域组成<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span></span><br><span class="line">	ElemType data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">next</span>;</span><span class="comment">/*下一个节点的地址*/</span></span><br><span class="line">&#125;Node;</span><br><span class="line"><span class="keyword">typedef</span> Node* linklist;<span class="comment">/*定义Linklist*/</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
-<p>#</p>
+<h1 id="4-单链表的整表创建"><a href="#4-单链表的整表创建" class="headerlink" title="4.单链表的整表创建"></a>4.单链表的整表创建</h1><ul>
+<li>头插法创建思路</li>
+</ul>
+<ol>
+<li>声明指针p和计数器i</li>
+<li>初始化空链表L</li>
+<li>让L的头节点指针指向NULL，就建立了一个带头节点的单链表</li>
+<li>循环：<ul>
+<li>生成新的节点赋值给p</li>
+<li>生成随机数字赋值给p-&gt;data</li>
+<li>将p插入到头节点的后面<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*头插法-随机产生n个数，建立带头节点的链表*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CreateListHead</span><span class="params">(linklist* L,<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    linklist p;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line"> 	srand(time(<span class="number">0</span>));</span><br><span class="line"> 	*L = (linklist)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">	(*L)-&gt;next = <span class="literal">NULL</span>; </span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        p = (linklist)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">        p-&gt;data = rand()%<span class="number">100</span>+<span class="number">1</span>;</span><br><span class="line">        p-&gt;next = (*L)-&gt;next;</span><br><span class="line">        (*L)-&gt;next = p;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">- 尾插法创建链表思路</span><br><span class="line"><span class="number">1.</span> 声明指针p,r,计数器i</span><br><span class="line"><span class="number">2.</span> 创建空链表，指针r指向L链表</span><br><span class="line"><span class="number">3.</span> 循环</span><br><span class="line">   - 生成新的节点赋给p</span><br><span class="line">   - 随机数赋值给p-&gt;data，p-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">   - 指针r的next指向p</span><br><span class="line">   - r指针指向p</span><br><span class="line">```c</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GreateListEnd</span><span class="params">(linklist* L,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	linklist p,r;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line"> 	srand(time(<span class="number">0</span>));</span><br><span class="line">   *L = (linklist)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">   r = *L;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; n; i++)&#123;</span><br><span class="line">    	p = (linklist)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">    	p-&gt;data = rand()%<span class="number">100</span> + <span class="number">1</span>;</span><br><span class="line">    	p-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">		r-&gt;next = p;</span><br><span class="line">		r = p;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="5-单链表的读取"><a href="#5-单链表的读取" class="headerlink" title="5.单链表的读取"></a>5.单链表的读取</h1><ul>
+<li>思路</li>
+</ul>
+<ol>
+<li>声明指针p和计数器i为1</li>
+<li>p指向第一个节点</li>
+<li>循环<ul>
+<li>只要p存在且计数器没等于n</li>
+<li>p就等于p-&gt;next,计数器加1</li>
+</ul>
+</li>
+<li>如果p不存在或者i大于n，则返回错误信息</li>
+<li>指针e保存要取的值<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*用e返回L重的第n个元素*/</span></span><br><span class="line"><span class="function">Status <span class="title">GetElem</span><span class="params">(linklist L, <span class="keyword">int</span> n, ElemType *e)</span></span>&#123;</span><br><span class="line">	linklist p;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	p = L-&gt;next;</span><br><span class="line">	i = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(p &amp;&amp; i &lt; n)&#123;</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!p || i &gt; n)&#123;</span><br><span class="line">		<span class="keyword">return</span> ERROR;<span class="comment">/*第n个节点不存在*/</span></span><br><span class="line">	&#125;</span><br><span class="line">	*e = p-&gt;data;<span class="comment">/*取第n个节点的数据*/</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,*e);</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="6-单链表的插入与删除"><a href="#6-单链表的插入与删除" class="headerlink" title="6.单链表的插入与删除"></a>6.单链表的插入与删除</h1><ul>
+<li>插入思路</li>
+</ul>
+<ol>
+<li>定义指针p,q,计数器j值为1</li>
+<li>指针p指向L链表</li>
+<li>（循环）只要p存在且计数器不等于插入的位置<ul>
+<li>p等于p-&gt;next</li>
+<li>计数器加1</li>
+</ul>
+</li>
+<li>p不存在或者计数器大于要插入的位置，返回错误参数</li>
+<li>生成新的节点赋给q</li>
+<li>q的下一个节点等于p的下一个节点</li>
+<li>p的下一个节点等于q<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*在L的第n个位置插入数值e*/</span></span><br><span class="line"><span class="function">Status <span class="title">listInsert</span><span class="params">(linklist* L,<span class="keyword">int</span> n,ElemType e)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> j;</span><br><span class="line">	linklist p,q;</span><br><span class="line">	p = *L;</span><br><span class="line">	j = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(p &amp;&amp; j &lt; n)&#123;</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!p || j &gt; n)&#123;</span><br><span class="line">		<span class="keyword">return</span> ERROR;</span><br><span class="line">	&#125;</span><br><span class="line">	q = (linklist)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">	q-&gt;data = e;</span><br><span class="line">	q-&gt;next = p-&gt;next;</span><br><span class="line">	p-&gt;next = q;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"第%d个位置插入的元素是：%d\n"</span>,n,e);</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line">```                  </span><br><span class="line"></span><br><span class="line">- 删除思路</span><br><span class="line"><span class="number">1.</span> 定义指针p，q，计数器j值为<span class="number">1</span></span><br><span class="line"><span class="number">2.</span> 指针p指向链表L</span><br><span class="line"><span class="number">3.</span> （循环）只要计数器不等于删除的位置且p有后继节点</span><br><span class="line">   -  p就指向后继节点</span><br><span class="line">   -  计数器加<span class="number">1</span></span><br><span class="line"><span class="number">4.</span> 如果p的后继节点不存在或者计数器大于要删除的位置，就返回错误参数</span><br><span class="line"><span class="number">5.</span> 指针q等于p的后继元素（要删除的位置元素）</span><br><span class="line"><span class="number">6.</span> p的后继元素就等于q的后继元素</span><br><span class="line"><span class="number">7.</span> 将节点q的数据赋值给e</span><br><span class="line"><span class="number">8.</span> 释放q节点</span><br><span class="line">```c</span><br><span class="line"><span class="comment">/*删除L的第n个元素，用e记录删除的数值*/</span></span><br><span class="line"><span class="function">Status <span class="title">listDelete</span><span class="params">(linklist* L, <span class="keyword">int</span> n, ElemType* e)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> j;</span><br><span class="line">	linklist p,q;</span><br><span class="line">	p = (*L);</span><br><span class="line">	j = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(p-&gt;next &amp;&amp; n &gt; j)&#123;</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!(p-&gt;next) || j &gt; n )&#123;</span><br><span class="line">		<span class="keyword">return</span> ERROR;</span><br><span class="line">	&#125;</span><br><span class="line">	q = p-&gt;next;</span><br><span class="line">	p-&gt;next = q-&gt;next;</span><br><span class="line">	*e = q-&gt;data;</span><br><span class="line">	<span class="built_in">free</span>(q);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"第%d个位置的%d删除了\n"</span>,n,*e);</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="7-单链表的整表删除"><a href="#7-单链表的整表删除" class="headerlink" title="7.单链表的整表删除"></a>7.单链表的整表删除</h1><ul>
+<li>算法思路</li>
+</ul>
+<ol>
+<li>声明节点p,q</li>
+<li>p指向第一个节点</li>
+<li>（循环）没到表尾<ul>
+<li>将下一节点的值赋值给q</li>
+<li>释放p</li>
+<li>将q赋值给p<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*将L链表重置为空链表*/</span></span><br><span class="line"><span class="function">Status <span class="title">ListDeleteAll</span><span class="params">(linklist* L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    linklist p = *L,q;</span><br><span class="line">    <span class="keyword">while</span>(p-&gt; next)</span><br><span class="line">    &#123;</span><br><span class="line">        q = p-&gt;next;</span><br><span class="line">        p-&gt; next = q-&gt;next;</span><br><span class="line">        (*L)-&gt;data--;</span><br><span class="line">        <span class="built_in">free</span>(q);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(p);</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="8-单链表与顺序存储结构优缺点"><a href="#8-单链表与顺序存储结构优缺点" class="headerlink" title="8.单链表与顺序存储结构优缺点"></a>8.单链表与顺序存储结构优缺点</h1><ul>
+<li>存储分配方式<ul>
+<li>顺序存储结构使用一段连续的存储单元依次存储线性表的数据结构</li>
+<li>单链表采用链式存储结构，用一组任意的存储单元存放线性表的元素</li>
+</ul>
+</li>
+<li>时间性能<ul>
+<li>查找<ul>
+<li>顺序存储结构O(1)</li>
+<li>单链表O(n)</li>
+</ul>
+</li>
+<li>插入与删除<ul>
+<li>顺序存储结构需要平均移动表长的一半元素，时间为O(n)</li>
+<li>单链表在找出某位置的指针后，插入和删除的时间仅为O(1) </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>空间性能<ul>
+<li>顺序存储结构需要预分配存储空间，分配大了浪费，分小了容易发生上溢</li>
+<li>单链表不需要预分配空间，只要有就可以分配，元素个数也没有限制</li>
+</ul>
+</li>
+<li>结论</li>
+<li>若线性表需要频繁查找，很少进行插入删除操作时，宜采用顺序存储结构</li>
+<li>若要频繁的插入删除操作时，宜采用链式存储结构</li>
+</ul>
 
       
 
@@ -257,11 +354,19 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大话数据结构笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">线性表</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c语言</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
         		</li>
       		
 		</ul>
@@ -488,7 +593,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">大话数据结构笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">循环链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">thinkphp5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">算法课程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">栈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -500,11 +621,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">英语语法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">定语从句</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">名词性从句</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">坑</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">thinkphp5</a>
+                <a href="javascript:void(0)" class="js-tag color5">特殊句式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">状语从句</a>
               </li>
              
               <li class="article-tag-list-item">
