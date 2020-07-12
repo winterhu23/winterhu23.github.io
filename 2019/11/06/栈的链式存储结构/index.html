@@ -58,11 +58,11 @@
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/">主页</a></li>
+				<li><a href="/">HOMEPAGE/主页</a></li>
 	        
-				<li><a href="/archives">英语笔记</a></li>
+				<li><a href="/archives/index.html">ARCHIVES/所有文章</a></li>
 	        
-				<li><a href="/archives/index.html">归档</a></li>
+				<li><a href="/categories">CATEGORIES/文章分类</a></li>
 	        
 			</ul>
 		</nav>
@@ -146,11 +146,11 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">HOMEPAGE/主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/archives">英语笔记</a></li>
+					<li style="width: 33.333333333333336%"><a href="/archives/index.html">ARCHIVES/所有文章</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/archives/index.html">归档</a></li>
+					<li style="width: 33.333333333333336%"><a href="/categories">CATEGORIES/文章分类</a></li>
 		        
 				</ul>
 			</nav>
@@ -185,7 +185,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- TOC -->
+        
+          
+            <!-- TOC -->
 
 <ul>
 <li><a href="#1%E6%A0%88%E7%9A%84%E5%AE%9A%E4%B9%89">1.栈的定义</a></li>
@@ -219,30 +221,8 @@
 <li>上面已经说过，链栈的插入、删除操作都是在操作 top，所以我们先将 top 取出来赋值给 temp，然后将栈顶元素的后继节点作为栈顶，链栈长度减一，取出旧的栈顶中的数据（注意这里是 temp-&gt;data，而不是 S-&gt;top-&gt;data），然后释放旧的栈顶元素。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Status <span class="title">Pop</span><span class="params">(LinkStack *s,<span class="keyword">int</span> *e)</span></span>&#123;</span><br><span class="line">    LinkStackPtr p;</span><br><span class="line">    <span class="keyword">if</span>(IsEmpty(*s))&#123;</span><br><span class="line">        <span class="keyword">return</span> ERROR;</span><br><span class="line">    &#125;</span><br><span class="line">    *e = s-&gt;top-&gt;data;</span><br><span class="line">    p = s-&gt;top; </span><br><span class="line">    s-&gt;top = s-&gt;top-&gt;next;</span><br><span class="line">    <span class="built_in">free</span>(p);</span><br><span class="line">    s-&gt;count--;</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -499,15 +479,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">循环链表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">栈</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">循环链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">英语语法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">定语从句</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -527,11 +515,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">英语语法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">定语从句</a>
+                <a href="javascript:void(0)" class="js-tag color5">状语从句</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -539,15 +523,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">特殊句式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">状语从句</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">坑</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">特殊句式</a>
               </li>
              
               <li class="article-tag-list-item">

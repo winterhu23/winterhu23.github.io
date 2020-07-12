@@ -53,11 +53,11 @@
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/">主页</a></li>
+				<li><a href="/">HOMEPAGE/主页</a></li>
 	        
-				<li><a href="/archives">英语笔记</a></li>
+				<li><a href="/archives/index.html">ARCHIVES/所有文章</a></li>
 	        
-				<li><a href="/archives/index.html">归档</a></li>
+				<li><a href="/categories">CATEGORIES/文章分类</a></li>
 	        
 			</ul>
 		</nav>
@@ -141,11 +141,11 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">HOMEPAGE/主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/archives">英语笔记</a></li>
+					<li style="width: 33.333333333333336%"><a href="/archives/index.html">ARCHIVES/所有文章</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/archives/index.html">归档</a></li>
+					<li style="width: 33.333333333333336%"><a href="/categories">CATEGORIES/文章分类</a></li>
 		        
 				</ul>
 			</nav>
@@ -182,7 +182,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- TOC -->
+        
+          
+            <!-- TOC -->
 
 <ul>
 <li><a href="#第一部分-英语词根的基本知识">第一部分 英语词根的基本知识</a><ul>
@@ -478,9 +480,8 @@
 </tr>
 </tbody></table>
 
-      
-
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -539,7 +540,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- TOC -->
+        
+          
+            <!-- TOC -->
 
 <ul>
 <li><a href="#1git%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C">1.git命令行操作</a><ul>
@@ -621,9 +624,8 @@
 <h3 id="1-3-5-前进和后退"><a href="#1-3-5-前进和后退" class="headerlink" title="1.3.5 前进和后退"></a>1.3.5 前进和后退</h3></li>
 </ul>
 
-      
-
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -693,7 +695,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="2-1-进程"><a href="#2-1-进程" class="headerlink" title="2.1 进程"></a>2.1 进程</h1><h2 id="2-1-2-什么是进程"><a href="#2-1-2-什么是进程" class="headerlink" title="2.1.2 什么是进程"></a>2.1.2 什么是进程</h2><ul>
+        
+          
+            <h1 id="2-1-进程"><a href="#2-1-进程" class="headerlink" title="2.1 进程"></a>2.1 进程</h1><h2 id="2-1-2-什么是进程"><a href="#2-1-2-什么是进程" class="headerlink" title="2.1.2 什么是进程"></a>2.1.2 什么是进程</h2><ul>
 <li><p>定义：一个正在运行的程序就是一个进程</p>
 </li>
 <li><p>进程包括的内容</p>
@@ -986,9 +990,8 @@
 </tr>
 </tbody></table>
 
-      
-
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -1058,7 +1061,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- TOC -->
+        
+          
+            <!-- TOC -->
 
 <ul>
 <li><a href="#11-操作系统概述">1.1 操作系统概述</a></li>
@@ -1216,9 +1221,8 @@
 </li>
 </ul>
 
-      
-
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -1288,15 +1292,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
+        
+          
+            <ul>
 <li>相同点：都是二元操作符，而且右边的操作数都是成员名称</li>
 <li>不同点：(.)点运算符的左边是结构尾结构的表达式</li>
 <li>(-&gt;)箭头运算符左边的操作数是一个指向结构体的指针</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个结构体类型：DATA</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    <span class="keyword">char</span> name[<span class="number">20</span>];</span><br><span class="line">    <span class="keyword">int</span> age; <span class="comment">//结构体成员</span></span><br><span class="line">&#125;DATA;</span><br><span class="line">DATA data; <span class="comment">//声明一个结构体变量</span></span><br><span class="line">DATA *pdata; <span class="comment">//声明一个结构体指针</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//访问操作数</span></span><br><span class="line">data.age = <span class="number">18</span>; <span class="comment">//结构体变量通过点运算符访问</span></span><br><span class="line">pdata-&gt;age = <span class="number">18</span>; <span class="comment">//结构体变量变量通过箭头运算符访问</span></span><br></pre></td></tr></table></figure>
-      
-
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -1355,7 +1360,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- TOC -->
+        
+          
+            <!-- TOC -->
 
 <ul>
 <li><a href="#一队列的定义">一.队列的定义</a></li>
@@ -1412,9 +1419,8 @@
 <h2 id="4-入队列操作"><a href="#4-入队列操作" class="headerlink" title="4.入队列操作"></a>4.入队列操作</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">EnQueue</span><span class="params">(LinkQueue *q,<span class="keyword">int</span> e)</span></span>&#123;</span><br><span class="line">    Queueptr *node = (Queueotr)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(QNOde));</span><br><span class="line">    node-&gt;data=e;</span><br><span class="line">    node-&gt;next=<span class="literal">NULL</span>:</span><br><span class="line">    q-&gt;rear-&gt;next = node;</span><br><span class="line">    q-&gt;rear = node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="5-出队列操作"><a href="#5-出队列操作" class="headerlink" title="5.出队列操作"></a>5.出队列操作</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Status <span class="title">DeQueue</span><span class="params">(LinkQueue *q,<span class="keyword">int</span> *e)</span></span>&#123;</span><br><span class="line">    Queueptr p;</span><br><span class="line">    <span class="keyword">if</span>(q-&gt;rear == q-&gt;front)&#123;</span><br><span class="line">        <span class="keyword">return</span> ERROR;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//q-&gt;front是头节点，头节点指向的节点才是队头</span></span><br><span class="line">    p=q-&gt;front-&gt;next;</span><br><span class="line">    *e = p-&gt;data;</span><br><span class="line">    q-&gt;front-&gt;next = p-&gt;next;<span class="comment">//头节点变为后继节点</span></span><br><span class="line">    <span class="comment">//若队头是队尾(只有一个元素)时，队头队尾指向头节点</span></span><br><span class="line">    <span class="keyword">if</span>(q-&gt;rear == p)&#123;</span><br><span class="line">        q-&gt;rear = q-&gt;front;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(p);</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -1492,7 +1498,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- TOC -->
+        
+          
+            <!-- TOC -->
 
 <ul>
 <li><a href="#一栈的应用-递归">一.栈的应用-递归</a><ul>
@@ -1528,9 +1536,8 @@
 <li>规则： 从左到右遍历表达式的每个数字和符号，遇到数字就进栈，遇到是字符就将处于栈顶的两个数字出栈，进行运算，运算结果进栈，一直到最终获得结果</li>
 </ul>
 
-      
-
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -1608,7 +1615,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- TOC -->
+        
+          
+            <!-- TOC -->
 
 <ul>
 <li><a href="#1%E6%A0%88%E7%9A%84%E5%AE%9A%E4%B9%89">1.栈的定义</a></li>
@@ -1642,9 +1651,8 @@
 <li>上面已经说过，链栈的插入、删除操作都是在操作 top，所以我们先将 top 取出来赋值给 temp，然后将栈顶元素的后继节点作为栈顶，链栈长度减一，取出旧的栈顶中的数据（注意这里是 temp-&gt;data，而不是 S-&gt;top-&gt;data），然后释放旧的栈顶元素。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Status <span class="title">Pop</span><span class="params">(LinkStack *s,<span class="keyword">int</span> *e)</span></span>&#123;</span><br><span class="line">    LinkStackPtr p;</span><br><span class="line">    <span class="keyword">if</span>(IsEmpty(*s))&#123;</span><br><span class="line">        <span class="keyword">return</span> ERROR;</span><br><span class="line">    &#125;</span><br><span class="line">    *e = s-&gt;top-&gt;data;</span><br><span class="line">    p = s-&gt;top; </span><br><span class="line">    s-&gt;top = s-&gt;top-&gt;next;</span><br><span class="line">    <span class="built_in">free</span>(p);</span><br><span class="line">    s-&gt;count--;</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 
-      
-
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -1718,7 +1726,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- TOC -->
+        
+          
+            <!-- TOC -->
 
 <ul>
 <li><a href="#一顺序栈的基本定义">一.顺序栈的基本定义</a></li>
@@ -1800,9 +1810,8 @@
 <li>这两个栈具有相同的数据类型</li>
 </ul>
 
-      
-
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -1876,7 +1885,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><ul>
+        
+          
+            <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><ul>
 <li>名词性从句，指一个句子当名词来使用，放到另一个句子当中</li>
 <li>名词主要作四种成分：宾语，主语，表语，同位语</li>
 <li>从句分成四种：宾语从句，主语从句，表语从句，同位语从句<h1 id="一-宾语从句"><a href="#一-宾语从句" class="headerlink" title="一.宾语从句"></a>一.宾语从句</h1><h2 id="1-陈述句变宾语从句"><a href="#1-陈述句变宾语从句" class="headerlink" title="1.陈述句变宾语从句"></a>1.陈述句变宾语从句</h2></li>
@@ -1932,9 +1943,8 @@
 <li>idea opinion fact evidence question doubt reason theory belief possibility chance hope contention guarantee</li>
 </ul>
 
-      
-
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -2121,15 +2131,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">循环链表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">栈</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">循环链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">英语语法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">定语从句</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2149,11 +2167,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">英语语法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">定语从句</a>
+                <a href="javascript:void(0)" class="js-tag color5">状语从句</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2161,15 +2175,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">特殊句式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">状语从句</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">坑</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">特殊句式</a>
               </li>
              
               <li class="article-tag-list-item">

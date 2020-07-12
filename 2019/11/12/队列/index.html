@@ -60,11 +60,11 @@
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/">主页</a></li>
+				<li><a href="/">HOMEPAGE/主页</a></li>
 	        
-				<li><a href="/archives">英语笔记</a></li>
+				<li><a href="/archives/index.html">ARCHIVES/所有文章</a></li>
 	        
-				<li><a href="/archives/index.html">归档</a></li>
+				<li><a href="/categories">CATEGORIES/文章分类</a></li>
 	        
 			</ul>
 		</nav>
@@ -148,11 +148,11 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">HOMEPAGE/主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/archives">英语笔记</a></li>
+					<li style="width: 33.333333333333336%"><a href="/archives/index.html">ARCHIVES/所有文章</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/archives/index.html">归档</a></li>
+					<li style="width: 33.333333333333336%"><a href="/categories">CATEGORIES/文章分类</a></li>
 		        
 				</ul>
 			</nav>
@@ -187,7 +187,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- TOC -->
+        
+          
+            <!-- TOC -->
 
 <ul>
 <li><a href="#一队列的定义">一.队列的定义</a></li>
@@ -244,30 +246,8 @@
 <h2 id="4-入队列操作"><a href="#4-入队列操作" class="headerlink" title="4.入队列操作"></a>4.入队列操作</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">EnQueue</span><span class="params">(LinkQueue *q,<span class="keyword">int</span> e)</span></span>&#123;</span><br><span class="line">    Queueptr *node = (Queueotr)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(QNOde));</span><br><span class="line">    node-&gt;data=e;</span><br><span class="line">    node-&gt;next=<span class="literal">NULL</span>:</span><br><span class="line">    q-&gt;rear-&gt;next = node;</span><br><span class="line">    q-&gt;rear = node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="5-出队列操作"><a href="#5-出队列操作" class="headerlink" title="5.出队列操作"></a>5.出队列操作</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Status <span class="title">DeQueue</span><span class="params">(LinkQueue *q,<span class="keyword">int</span> *e)</span></span>&#123;</span><br><span class="line">    Queueptr p;</span><br><span class="line">    <span class="keyword">if</span>(q-&gt;rear == q-&gt;front)&#123;</span><br><span class="line">        <span class="keyword">return</span> ERROR;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//q-&gt;front是头节点，头节点指向的节点才是队头</span></span><br><span class="line">    p=q-&gt;front-&gt;next;</span><br><span class="line">    *e = p-&gt;data;</span><br><span class="line">    q-&gt;front-&gt;next = p-&gt;next;<span class="comment">//头节点变为后继节点</span></span><br><span class="line">    <span class="comment">//若队头是队尾(只有一个元素)时，队头队尾指向头节点</span></span><br><span class="line">    <span class="keyword">if</span>(q-&gt;rear == p)&#123;</span><br><span class="line">        q-&gt;rear = q-&gt;front;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(p);</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -528,15 +508,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">循环链表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">栈</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">循环链表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">英语语法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">定语从句</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -556,11 +544,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">英语语法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">定语从句</a>
+                <a href="javascript:void(0)" class="js-tag color5">状语从句</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -568,15 +552,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">特殊句式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">状语从句</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">坑</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">特殊句式</a>
               </li>
              
               <li class="article-tag-list-item">
