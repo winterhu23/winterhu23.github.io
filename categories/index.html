@@ -6,22 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>静态链表 | Winter blog</title>
+  <title>categories | Winter blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.静态链表的概念 2.静态链表的插入操作 3.静态链表的删除 4.查看静态链表长度 5.静态链表的优缺点   1.静态链表的概念 用数组描述的链表叫做静态链表 我们让数组元素由两个数据域组成，data和cur，也就是数组的每一个下标都对应一个data和cur，数据域data用来存放数据元素，cur相当于单链表中的next指针，存放该元素后继在数组中的下标，我们把cur叫做游标    为了方">
-<meta name="keywords" content="大话数据结构笔记,c语言,链表">
-<meta property="og:type" content="article">
-<meta property="og:title" content="静态链表">
-<meta property="og:url" content="http://yoursite.com/2019/10/12/静态链表/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://yoursite.com/categories/index.html">
 <meta property="og:site_name" content="Winter blog">
-<meta property="og:description" content="1.静态链表的概念 2.静态链表的插入操作 3.静态链表的删除 4.查看静态链表长度 5.静态链表的优缺点   1.静态链表的概念 用数组描述的链表叫做静态链表 我们让数组元素由两个数据域组成，data和cur，也就是数组的每一个下标都对应一个data和cur，数据域data用来存放数据元素，cur相当于单链表中的next指针，存放该元素后继在数组中的下标，我们把cur叫做游标    为了方">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/2019/10/12/静态链表/%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8.jpg">
-<meta property="og:updated_time" content="2019-10-24T02:36:29.517Z">
+<meta property="og:updated_time" content="2020-07-12T09:19:43.941Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="静态链表">
-<meta name="twitter:description" content="1.静态链表的概念 2.静态链表的插入操作 3.静态链表的删除 4.查看静态链表长度 5.静态链表的优缺点   1.静态链表的概念 用数组描述的链表叫做静态链表 我们让数组元素由两个数据域组成，data和cur，也就是数组的每一个下标都对应一个data和cur，数据域data用来存放数据元素，cur相当于单链表中的next指针，存放该元素后继在数组中的下标，我们把cur叫做游标    为了方">
-<meta name="twitter:image" content="http://yoursite.com/2019/10/12/静态链表/%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8.jpg">
+<meta name="twitter:title" content="categories">
   
     <link rel="alternative" href="/atom.xml" title="Winter blog" type="application/atom+xml">
   
@@ -167,79 +161,27 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-静态链表" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      静态链表
+      categories
     </h1>
   
 
         
-        <a href="/2019/10/12/静态链表/" class="archive-article-date">
-  	<time datetime="2019-10-12T06:58:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-12</time>
+        <a href="/categories/index.html" class="archive-article-date">
+  	<time datetime="2020-07-12T09:16:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- TOC -->
-
-<ul>
-<li><a href="#1静态链表的概念">1.静态链表的概念</a></li>
-<li><a href="#2静态链表的插入操作">2.静态链表的插入操作</a></li>
-<li><a href="#3静态链表的删除">3.静态链表的删除</a></li>
-<li><a href="#4查看静态链表长度">4.查看静态链表长度</a></li>
-<li><a href="#5静态链表的优缺点">5.静态链表的优缺点</a></li>
-</ul>
-<!-- /TOC -->
-<h1 id="1-静态链表的概念"><a href="#1-静态链表的概念" class="headerlink" title="1.静态链表的概念"></a>1.静态链表的概念</h1><ul>
-<li>用数组描述的链表叫做静态链表</li>
-<li>我们让数组元素由两个数据域组成，data和cur，也就是数组的每一个下标都对应一个data和cur，数据域data用来存放数据元素，cur相当于单链表中的next指针，存放该元素后继在数组中的下标，我们把cur叫做游标</li>
-</ul>
-<p><img src="%E9%9D%99%E6%80%81%E9%93%BE%E8%A1%A8.jpg" alt="静态链表"></p>
-<ul>
-<li><p>为了方便插入数据，我们通常会把数组建的大一些，以便有空间插入，不会溢出</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 1000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> OK 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ERROR 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TRUE 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FALSE 0</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> Status;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	ElemType data;</span><br><span class="line">	<span class="keyword">int</span> cur;</span><br><span class="line">&#125;Componet,StaticList[MAXSIZE];</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>初始化数组</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*将一维数组space中各个分量链成一备用表*/</span></span><br><span class="line"><span class="comment">/*space[0].cur为头指针，"0"表示空指针*/</span> </span><br><span class="line"><span class="function">Status <span class="title">InitList</span><span class="params">(StaticList space)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; MAXSIZE - <span class="number">1</span>; i++ )&#123;</span><br><span class="line">		space[i].cur = i + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	space[MAXSIZE - <span class="number">1</span>].cur = <span class="number">0</span>;<span class="comment">/*当前静态链表尾空，最后一个元素的cur为0*/</span></span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h1 id="2-静态链表的插入操作"><a href="#2-静态链表的插入操作" class="headerlink" title="2.静态链表的插入操作"></a>2.静态链表的插入操作</h1><ul>
-<li>静态链表中要解决的问题：如何用静态模拟动态链表结构的存储空间的分配，需要时申请，无用时释放</li>
-<li>解决的办法是将所有为使用以及被删除的分量用游标链成一个备用链表，每当插入时，就可以从备用链表上取得第一个节点作为待插入的新节点<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*若备用空间链表非空，则返回分配的结点下标，否则返回0*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">malloc_sll</span><span class="params">(StaticList space)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="comment">/*当前数组第一个元素的cur存的值*/</span></span><br><span class="line">	<span class="comment">/*就是要返回的第一个备用空间的下标*/</span> </span><br><span class="line">	i = space[<span class="number">0</span>].cur;</span><br><span class="line">	<span class="keyword">if</span>(space[<span class="number">0</span>].cur)&#123;</span><br><span class="line">		space[<span class="number">0</span>].cur = space[i].cur;<span class="comment">/*备用空间的cur的下一个cur的值*/</span> </span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*在L中第i个元素之前插入新的数据元素e*/</span></span><br><span class="line"><span class="function">Status <span class="title">ListInsert</span><span class="params">(StaticList L,<span class="keyword">int</span> i,ElemType e)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> j,k,l;</span><br><span class="line">	k = MAXSIZE - <span class="number">1</span>;<span class="comment">/*k为最后一个数据元素的下标*/</span> </span><br><span class="line">	<span class="keyword">if</span>(i &lt; <span class="number">0</span> || i &gt;ListLength(L) + <span class="number">1</span> )&#123;<span class="comment">//见4.查看链表长度</span></span><br><span class="line">		<span class="keyword">return</span> ERROR;</span><br><span class="line">	&#125; </span><br><span class="line">	j = malloc_sll(L);<span class="comment">/*获取空闲分量的下标*/</span></span><br><span class="line">	<span class="keyword">if</span>(j)&#123;</span><br><span class="line">		L[j].data = e;</span><br><span class="line">		<span class="comment">/*找到第i个元素之前的位置*/</span></span><br><span class="line">		<span class="keyword">for</span>(l = <span class="number">1</span>;l &lt;= i <span class="number">-1</span>;l++)&#123;</span><br><span class="line">			k = L[k].cur;</span><br><span class="line">		&#125;</span><br><span class="line">		L[j].cur = L[k].cur;<span class="comment">/*插入元素的cur等于插入位置前一个元素的cur*/</span></span><br><span class="line">		L[k].cur = j;<span class="comment">/*前一个元素的cur等于插入元素的cur*/</span></span><br><span class="line">		<span class="keyword">return</span> OK;</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">return</span> ERROR;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="3-静态链表的删除"><a href="#3-静态链表的删除" class="headerlink" title="3.静态链表的删除"></a>3.静态链表的删除</h1><ul>
-<li>删除元素时，原来时需要释放节点的函数free()，我们自己实现</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*删除L中第i个数据元素e*/</span></span><br><span class="line"><span class="function">Status <span class="title">ListDelete</span><span class="params">(StaticList L,<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> j,k;</span><br><span class="line">	<span class="keyword">if</span>(i &lt; <span class="number">0</span> || i &gt; ListLength(L))&#123;</span><br><span class="line">		<span class="keyword">return</span> ERROR;</span><br><span class="line">	&#125;</span><br><span class="line">	k = MAXSIZE - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(j = <span class="number">1</span>; j &lt;= i - <span class="number">1</span>;j++)&#123;</span><br><span class="line">		k = L[k].cur;</span><br><span class="line">	&#125;</span><br><span class="line">	j = L[k].cur;<span class="comment">/*i位置的下标*/</span></span><br><span class="line">	L[k].cur = L[j].cur;</span><br><span class="line">	Free_SSL(L,j);</span><br><span class="line">	<span class="keyword">return</span> OK; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*将空闲节点回收到备用节点*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Free_SSL</span><span class="params">(StaticList space,<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">	space[k].cur = space[<span class="number">0</span>].cur;<span class="comment">/*把第一个元素的下一个位置的下标赋值给空闲位置的下一个位置的下标*/</span></span><br><span class="line">	space[<span class="number">0</span>].cur = k;<span class="comment">/*第一个元素的下一个位置的小标为空闲位置的下标*/</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="4-查看静态链表长度"><a href="#4-查看静态链表长度" class="headerlink" title="4.查看静态链表长度"></a>4.查看静态链表长度</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*返回L中数据元素的个数*/</span></span><br><span class="line"><span class="function">Status <span class="title">ListLength</span><span class="params">(StaticList L)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = L[MAXSIZE - <span class="number">1</span>].cur;</span><br><span class="line">	<span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(i)&#123;</span><br><span class="line">		i = L[i].cur;</span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> j;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="5-静态链表的优缺点"><a href="#5-静态链表的优缺点" class="headerlink" title="5.静态链表的优缺点"></a>5.静态链表的优缺点</h1><ul>
-<li>优点<ul>
-<li>在插入和删除操作时只需要修改游标，不需要移动元素，从而改进了顺序存储结构中的插入和删除操作需要移动大量元素的缺点</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>没有解决连续存储分配带来的表长难以缺点的问题</li>
-<li>失去了顺序存储结构随机存储的特性</li>
-</ul>
-</li>
-</ul>
-
+        
       
 
       
@@ -268,25 +210,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大话数据结构笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c语言</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">链表</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -337,7 +260,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/12/静态链表/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/categories/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -349,25 +272,6 @@
 </article>
 
   
-<nav id="article-nav">
-  
-    <a href="/2019/10/21/英语特殊句式/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          英语特殊句式
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2019/09/23/马思瑞电影口语课笔记/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">马思瑞电影口语课笔记</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -418,7 +322,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
