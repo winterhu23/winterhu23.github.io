@@ -162,6 +162,750 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-GO圣经练习题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/09/GO圣经练习题/">GO圣经练习题</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/09/GO圣经练习题/" class="archive-article-date">
+  	<time datetime="2020-10-09T11:32:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+          
+            <h1 id="第一章：入门"><a href="#第一章：入门" class="headerlink" title="第一章：入门"></a>第一章：入门</h1><h2 id="练习-1-1：-修改echo程序，使其能够打印os-Args-0-，即被执行命令本身的名字。"><a href="#练习-1-1：-修改echo程序，使其能够打印os-Args-0-，即被执行命令本身的名字。" class="headerlink" title="练习 1.1： 修改echo程序，使其能够打印os.Args[0]，即被执行命令本身的名字。"></a>练习 1.1： 修改echo程序，使其能够打印os.Args[0]，即被执行命令本身的名字。</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">var</span> s, step <span class="keyword">string</span></span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(os.Args); i++ &#123;</span><br><span class="line">	s += step + os.Args[i]</span><br><span class="line">	step = <span class="string">" "</span></span><br><span class="line">&#125;</span><br><span class="line">fmt.Println(s)</span><br></pre></td></tr></table></figure>
+
+<h2 id="练习-1-2：-修改echo程序，使其打印每个参数的索引和值，每个一行。"><a href="#练习-1-2：-修改echo程序，使其打印每个参数的索引和值，每个一行。" class="headerlink" title="练习 1.2： 修改echo程序，使其打印每个参数的索引和值，每个一行。"></a>练习 1.2： 修改echo程序，使其打印每个参数的索引和值，每个一行。</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">for</span> i, v := <span class="keyword">range</span> os.Args &#123;</span><br><span class="line">	fmt.Println(i, v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="练习-1-3：做实验测量潜在低效的版本和使用了strings-Join的版本的运行时间差异。"><a href="#练习-1-3：做实验测量潜在低效的版本和使用了strings-Join的版本的运行时间差异。" class="headerlink" title="练习 1.3：做实验测量潜在低效的版本和使用了strings.Join的版本的运行时间差异。"></a>练习 1.3：做实验测量潜在低效的版本和使用了strings.Join的版本的运行时间差异。</h2><ul>
+<li>golang拼接字符串的几种方式<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//字符串在go语言中是不可变的，每次一个字符串被分配给一个变量时，一个新的地址就会在内存中被分配来表示新的值</span></span><br><span class="line"><span class="comment">//在Go中，每次将内容追加到字符串末尾时，它必须创建一个新字符串，并将现有字符串和追加的字符串的内容复制到该字符串中。</span></span><br><span class="line"><span class="comment">//当你操纵的字符串变大时，这个过程就会变得越来越慢</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">addstringwithoperator</span><span class="params">()</span></span> &#123;</span><br><span class="line">	str1 := <span class="string">"hello"</span></span><br><span class="line">	str2 := <span class="string">"world"</span></span><br><span class="line">	<span class="comment">//var str3 string</span></span><br><span class="line">	_ = str1 + <span class="string">","</span> + str2</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//内部使用 []byte 实现，不像直接运算符这种会产生很多临时的字符串，</span></span><br><span class="line"><span class="comment">//但是内部的逻辑比较复杂，有很多额外的判断，还用到了 interface，所以性能也不是很好</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">addstringwithSprintf</span><span class="params">()</span></span> &#123;</span><br><span class="line">	str1 := <span class="string">"hello"</span></span><br><span class="line">	str2 := <span class="string">"world"</span></span><br><span class="line">	_ = fmt.Sprintf(<span class="string">"%s,%s"</span>, str1, str2)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//join会根据字符串数组的内容，计算一个出一个拼接的长度，然后去申请对应的内存大小，在已有一个数组的情况下，效率很高。</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">addstringwithJoin</span><span class="params">()</span></span> &#123;</span><br><span class="line">	str1 := <span class="string">"hello"</span></span><br><span class="line">	str2 := <span class="string">"world"</span></span><br><span class="line">	_ = strings.Join([]<span class="keyword">string</span>&#123;str1, str2&#125;, <span class="string">","</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//这个比较理想，可以当成可变字符使用，对内存的增长也有优化，如果能预估字符串的长度，还可以用 buffer.Grow() 接口来设置 capacity</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">addstringwithBuff</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> buff bytes.Buffer</span><br><span class="line">	str1 := <span class="string">"hello"</span></span><br><span class="line">	str2 := <span class="string">"world"</span></span><br><span class="line">	buff.WriteString(str1)</span><br><span class="line">	buff.WriteString(<span class="string">","</span>)</span><br><span class="line">	buff.WriteString(str2)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BenchmarkAddStringWithOperater</span><span class="params">(b *testing.B)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; b.N; i++ &#123;</span><br><span class="line">		addstringwithoperator()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BenchmarkAddStringWithSprintf</span><span class="params">(b *testing.B)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; b.N; i++ &#123;</span><br><span class="line">		addstringwithSprintf()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BenchmarkAddStringWithJoin</span><span class="params">(b *testing.B)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; b.N; i++ &#123;</span><br><span class="line">		addstringwithJoin()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BenchmarkAddStringWithBuff</span><span class="params">(b *testing.B)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; b.N; i++ &#123;</span><br><span class="line">		addstringwithBuff()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//打印结果</span></span><br><span class="line"><span class="comment">// BenchmarkAddStringWithOperater-4        40576525                29.4 ns/op             0 B/op          0 allocs/op</span></span><br><span class="line"><span class="comment">// BenchmarkAddStringWithSprintf-4          6073792               193 ns/op              48 B/op          3 allocs/op</span></span><br><span class="line"><span class="comment">// BenchmarkAddStringWithJoin-4            24448512                49.3 ns/op            16 B/op          1 allocs/op</span></span><br><span class="line"><span class="comment">// BenchmarkAddStringWithBuff-4            16042779                64.1 ns/op            64 B/op          1 allocs/op</span></span><br><span class="line"><span class="comment">//-4表示4个CPU线程执行；24448512表示总共执行了24448512次； 49.3ns/op，表示每次执行耗时49.3纳秒；</span></span><br><span class="line"><span class="comment">// 16B/op表示每次执行分配了 16字节内存；1 allocs/op表示每次执行分配了1次对象。</span></span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>总结<br>对于极少数短字符串(小于100，长度小于10)的连接，使用方法加号拼接就可以了，而且实际上可以更好地执行。对于更重要的效率的重载情况，使用buffer.WriteString()。Buffer是所评估的方法中最好的选择。也就是说,字符串。当您已经有一个需要连接成一个字符串的字符串片段时，Join是一个不错的选择。</p>
+</blockquote>
+
+          
+        
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Golang</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Go学习笔记//" class="article-tag-list-link color2">Go学习笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/09/GO圣经练习题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Go语言基本数据类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/22/Go语言基本数据类型/">Go语言基本数据类型</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/22/Go语言基本数据类型/" class="archive-article-date">
+  	<time datetime="2020-09-22T11:49:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+          
+            <h1 id="1-基本数据类型"><a href="#1-基本数据类型" class="headerlink" title="1 基本数据类型"></a>1 基本数据类型</h1><h2 id="1-1-整型"><a href="#1-1-整型" class="headerlink" title="1.1 整型"></a>1.1 整型</h2><ul>
+<li>整型分为以下两个大类：按长度分为：int8，int16,int32,int64对于无符号整型：uint8,uint16,uint32,uint64,uint8就是我们熟悉的<strong>byte</strong>型，int16对应c语言的<strong>short</strong>型，int64对应c语言的<strong>lang</strong>型</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">unit8</td>
+<td align="left">无符号 8位整型 (0 到 255)</td>
+</tr>
+<tr>
+<td align="center">uint16</td>
+<td align="left">无符号 16位整型 (0 到 65535)</td>
+</tr>
+<tr>
+<td align="center">uint32</td>
+<td align="left">无符号 32位整型 (0 到 4294967295)</td>
+</tr>
+<tr>
+<td align="center">uint64</td>
+<td align="left">无符号 64位整型 (0 到 18446744073709551615)</td>
+</tr>
+<tr>
+<td align="center">int8</td>
+<td align="left">有符号 8位整型 (-128 到 127)</td>
+</tr>
+<tr>
+<td align="center">int16</td>
+<td align="left">符号 16位整型 (-32768 到 32767)</td>
+</tr>
+<tr>
+<td align="center">int32</td>
+<td align="left">有符号 32位整型 (-2147483648 到 2147483647)</td>
+</tr>
+<tr>
+<td align="center">int64</td>
+<td align="left">有符号 64位整型 (-9223372036854775808 到 9223372036854775807)</td>
+</tr>
+</tbody></table>
+<h3 id="1-1-1-特殊整型"><a href="#1-1-1-特殊整型" class="headerlink" title="1.1.1 特殊整型"></a>1.1.1 特殊整型</h3><table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">uint</td>
+<td align="left">32位操作系统上就是uint32，64位操作系统上就是uint64</td>
+</tr>
+<tr>
+<td align="center">int</td>
+<td align="left">32位操作系统上就是int32，64位操作系统上就是int64</td>
+</tr>
+<tr>
+<td align="center">uintptr</td>
+<td align="left">无符号整型，用于存放一个指针</td>
+</tr>
+</tbody></table>
+<h3 id="1-1-2-数字自变量语法-Number-literals-syntax"><a href="#1-1-2-数字自变量语法-Number-literals-syntax" class="headerlink" title="1.1.2 数字自变量语法(Number literals syntax)"></a>1.1.2 数字自变量语法(Number literals syntax)</h3><ul>
+<li>Go1.13版本之后引入了数字字面量语法，这样便于开发者以二进制、八进制或十六进制浮点数的格式定义数字，例如：</li>
+<li>v := 0b00101101， 代表二进制的 101101，相当于十进制的 45。 v := 0o377，代表八进制的 377，相当于十进制的 255。 v := 0x1p-2，代表十六进制的 1 除以 2²，也就是 0.25。而且还允许我们用 _ 来分隔数字，比如说： v := 123_456 表示 v 的值等于 123456。我们可以借助fmt函数来将一个整数以不同进制形式展示。<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">// 十进制</span></span><br><span class="line">	<span class="keyword">var</span> a <span class="keyword">int</span> = <span class="number">10</span></span><br><span class="line">	fmt.Printf(<span class="string">"%d \n"</span>, a)  <span class="comment">// 10</span></span><br><span class="line">	fmt.Printf(<span class="string">"%b \n"</span>, a)  <span class="comment">// 1010  占位符%b表示二进制</span></span><br><span class="line"> </span><br><span class="line">	<span class="comment">// 八进制  以0开头</span></span><br><span class="line">	<span class="keyword">var</span> b <span class="keyword">int</span> = <span class="number">077</span></span><br><span class="line">	fmt.Printf(<span class="string">"%o \n"</span>, b)  <span class="comment">// 77</span></span><br><span class="line"> </span><br><span class="line">	<span class="comment">// 十六进制  以0x开头</span></span><br><span class="line">	<span class="keyword">var</span> c <span class="keyword">int</span> = <span class="number">0xff</span></span><br><span class="line">	fmt.Printf(<span class="string">"%x \n"</span>, c)  <span class="comment">// ff</span></span><br><span class="line">	fmt.Printf(<span class="string">"%X \n"</span>, c)  <span class="comment">// FF</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="1-2-浮点型"><a href="#1-2-浮点型" class="headerlink" title="1.2 浮点型"></a>1.2 浮点型</h2><ul>
+<li>Go语言支持两种浮点型数：float32和float64。这两种浮点型数据格式遵循IEEE 754标准： float32 的浮点数的最大范围约为 3.4e38，可以使用常量定义：math.MaxFloat32。 float64 的浮点数的最大范围约为 1.8e308，可以使用一个常量定义：math.MaxFloat64。打印浮点数时，可以使用fmt包配合动词%f，代码如下：<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">        <span class="string">"fmt"</span></span><br><span class="line">        <span class="string">"math"</span></span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">        fmt.Printf(<span class="string">"%f\n"</span>, math.Pi)</span><br><span class="line">        fmt.Printf(<span class="string">"%.2f\n"</span>, math.Pi)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="1-3-复数"><a href="#1-3-复数" class="headerlink" title="1.3 复数"></a>1.3 复数</h2><ul>
+<li>complex64和complex128</li>
+<li>复数有实部和虚部，complex64的实部和虚部为32位，complex128的实部和虚部为64位。<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c1 <span class="keyword">complex64</span></span><br><span class="line">c1 = <span class="number">1</span> + <span class="number">2i</span></span><br><span class="line"><span class="keyword">var</span> c2 <span class="keyword">complex128</span></span><br><span class="line">c2 = <span class="number">2</span> + <span class="number">3i</span></span><br><span class="line">fmt.Println(c1)</span><br><span class="line">fmt.Println(c2)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="1-4-布尔值"><a href="#1-4-布尔值" class="headerlink" title="1.4 布尔值"></a>1.4 布尔值</h2><ul>
+<li>Go语言中以bool类型进行声明布尔型数据，布尔型数据只有true（真）和false（假）两个值。</li>
+<li>注意：1，布尔值变量默认为false。2.go语言不允许将整型强转为bool型. 3.bool型无法参加数值运算，也无法与其他类型转换</li>
+</ul>
+<h2 id="1-5-字符串"><a href="#1-5-字符串" class="headerlink" title="1.5 字符串"></a>1.5 字符串</h2><ul>
+<li>Go语言中的字符串以原生数据类型出现，使用字符串就像使用其他原生数据类型（int、bool、float32、float64 等）一样。 Go 语言里的字符串的内部实现使用UTF-8编码。 字符串的值为双引号(“)中的内容，可以在Go语言的源码中直接添加非ASCII码字符</li>
+</ul>
+<h3 id="1-5-1-字符串转义符"><a href="#1-5-1-字符串转义符" class="headerlink" title="1.5.1 字符串转义符"></a>1.5.1 字符串转义符</h3><table>
+<thead>
+<tr>
+<th align="center">转义符</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">\r</td>
+<td align="left">回车符（返回行首）</td>
+</tr>
+<tr>
+<td align="center">\n</td>
+<td align="left">换行符（直接跳到下一行的同列位置）</td>
+</tr>
+<tr>
+<td align="center">\t</td>
+<td align="left">制表符</td>
+</tr>
+<tr>
+<td align="center">&#39;</td>
+<td align="left">单引号</td>
+</tr>
+<tr>
+<td align="center">&quot;</td>
+<td align="left">双引号</td>
+</tr>
+<tr>
+<td align="center">\</td>
+<td align="left">反斜杠</td>
+</tr>
+</tbody></table>
+<h3 id="1-5-2-多行字符串"><a href="#1-5-2-多行字符串" class="headerlink" title="1.5.2 多行字符串"></a>1.5.2 多行字符串</h3><ul>
+<li>go语言定义多行字符串用``(反引号字符)</li>
+<li>反引号间换行将被作为字符串中的换行，但是所有的转义字符均无效，文本将会原样输出。<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s1 := <span class="string">`第一行</span></span><br><span class="line"><span class="string">第二行</span></span><br><span class="line"><span class="string">第三行</span></span><br><span class="line"><span class="string">`</span></span><br><span class="line">fmt.Println(s1)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+          
+        
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Golang</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Go学习笔记//" class="article-tag-list-link color2">Go学习笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/22/Go语言基本数据类型/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-并列句" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/13/并列句/">并列句</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/13/并列句/" class="archive-article-date">
+  	<time datetime="2020-09-13T07:35:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+          
+            <!-- TOC -->
+
+<ul>
+<li><a href="#并列句">并列句</a><ul>
+<li><a href="#11-并列句的构成">1.1 并列句的构成</a></li>
+<li><a href="#12-并列句的省略">1.2 并列句的省略</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="并列句"><a href="#并列句" class="headerlink" title="并列句"></a>并列句</h1><h2 id="1-1-并列句的构成"><a href="#1-1-并列句的构成" class="headerlink" title="1.1 并列句的构成"></a>1.1 并列句的构成</h2><ul>
+<li>并列句指的就是多件事情(两件或以上)一样重要</li>
+<li>即为 多个简单句 + 并列连接词</li>
+</ul>
+<p>1.表示顺接的并列连接词</p>
+<table>
+<thead>
+<tr>
+<th align="center">并列连词</th>
+<th align="center">含意</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">…and…/both…and…</td>
+<td align="center">…和…</td>
+</tr>
+<tr>
+<td align="center">not only..but also</td>
+<td align="center">不但…而且…</td>
+</tr>
+</tbody></table>
+<p>2.表示转折的连接词</p>
+<table>
+<thead>
+<tr>
+<th align="center">并列连词</th>
+<th align="center">含意</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">…but…/…yet…</td>
+<td align="center">…但是…</td>
+</tr>
+</tbody></table>
+<p>3.表示选择的并列连接词</p>
+<table>
+<thead>
+<tr>
+<th align="center">并列连词</th>
+<th align="center">含意</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">…or…/either…or…</td>
+<td align="center">…或者…(二选一)</td>
+</tr>
+<tr>
+<td align="center">neither…nor…</td>
+<td align="center">既不…也不…(两个都不选)</td>
+</tr>
+</tbody></table>
+<p>4.表示因果的并列连接词</p>
+<table>
+<thead>
+<tr>
+<th align="center">并列连词</th>
+<th align="center">含意</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">…for…</td>
+<td align="center">…因为…</td>
+</tr>
+<tr>
+<td align="center">…so…</td>
+<td align="center">…所以/因此…</td>
+</tr>
+</tbody></table>
+<h2 id="1-2-并列句的省略"><a href="#1-2-并列句的省略" class="headerlink" title="1.2 并列句的省略"></a>1.2 并列句的省略</h2><ul>
+<li>并列句独有的特点：相同的成分可以省略，余下的成分保持不变</li>
+<li><strong>只有在并列句中，相同的主语可以省略，余下的谓语动词保持不变</strong></li>
+</ul>
+
+          
+        
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">英语语法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/英语笔记//" class="article-tag-list-link color5">英语笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/13/并列句/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-GO语言基础变量与常量" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/11/GO语言基础变量与常量/">GO语言基础变量与常量</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/11/GO语言基础变量与常量/" class="archive-article-date">
+  	<time datetime="2020-09-11T13:41:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+          
+            <!-- TOC -->
+
+<ul>
+<li><a href="#一变量">一.变量</a><ul>
+<li><a href="#11-标准声明">1.1 标准声明</a></li>
+<li><a href="#12-批量声明">1.2 批量声明</a></li>
+<li><a href="#13-变量的初始化">1.3 变量的初始化</a><ul>
+<li><a href="#131-类型推导">1.3.1 类型推导</a></li>
+<li><a href="#132-短变量声明">1.3.2 短变量声明</a></li>
+<li><a href="#133-匿名变量">1.3.3 匿名变量</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#二常量">二.常量</a><ul>
+<li><a href="#21-iota">2.1 iota</a><ul>
+<li><a href="#211-常见的iota示例">2.1.1 常见的iota示例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="一-变量"><a href="#一-变量" class="headerlink" title="一.变量"></a>一.变量</h1><ul>
+<li>Go语言中的变量需要声明后才能使用，同一作用域内不支持重复声明。 并且Go语言的变量声明后必须使用。<h2 id="1-1-标准声明"><a href="#1-1-标准声明" class="headerlink" title="1.1 标准声明"></a>1.1 标准声明</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> 变量名 变量类型</span><br><span class="line"><span class="comment">//变量声明以关键字var开头，变量类型放在变量的后面，行尾无需分号。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> name <span class="keyword">string</span></span><br><span class="line"><span class="keyword">var</span> age <span class="keyword">int</span></span><br><span class="line"><span class="keyword">var</span> isOk <span class="keyword">bool</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="1-2-批量声明"><a href="#1-2-批量声明" class="headerlink" title="1.2 批量声明"></a>1.2 批量声明</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//每声明一个变量就需要写var关键字会比较繁琐，go语言中还支持批量变量声明：</span></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">    a <span class="keyword">string</span></span><br><span class="line">    b <span class="keyword">int</span></span><br><span class="line">    c <span class="keyword">bool</span></span><br><span class="line">    d <span class="keyword">float32</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-变量的初始化"><a href="#1-3-变量的初始化" class="headerlink" title="1.3 变量的初始化"></a>1.3 变量的初始化</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//申明变量同时赋值</span></span><br><span class="line"><span class="keyword">var</span> sex <span class="keyword">int</span> = <span class="number">0</span></span><br><span class="line"><span class="keyword">var</span> firstname <span class="keyword">string</span> = <span class="string">"hu"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-1-类型推导"><a href="#1-3-1-类型推导" class="headerlink" title="1.3.1 类型推导"></a>1.3.1 类型推导</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//类型推导，让编译器根据变量的初始值推导出其类型</span></span><br><span class="line"><span class="keyword">var</span> lastname = <span class="string">"xin"</span></span><br><span class="line"><span class="keyword">var</span> age1 = <span class="number">18</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-2-短变量声明"><a href="#1-3-2-短变量声明" class="headerlink" title="1.3.2 短变量声明"></a>1.3.2 短变量声明</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在函数内部，可以使用更简略的 := 方式声明并初始化变量</span></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">// 全局变量m</span></span><br><span class="line"><span class="keyword">var</span> m = <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	n := <span class="number">10</span></span><br><span class="line">	m := <span class="number">200</span> <span class="comment">// 此处声明局部变量m</span></span><br><span class="line">	fmt.Println(m, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-3-匿名变量"><a href="#1-3-3-匿名变量" class="headerlink" title="1.3.3 匿名变量"></a>1.3.3 匿名变量</h3><ul>
+<li>在使用多重赋值时，如果想要忽略某个值，可以使用匿名变量（anonymous variable）。 匿名变量用一个下划线_表示，例如：</li>
+</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo</span><span class="params">()</span> <span class="params">(<span class="keyword">int</span>, <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">10</span>, <span class="string">"Q1mi"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	x, _ := foo()</span><br><span class="line">	_, y := foo()</span><br><span class="line">	fmt.Println(<span class="string">"x="</span>, x)</span><br><span class="line">	fmt.Println(<span class="string">"y="</span>, y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>匿名变量不占用命名空间，不会分配内存，所以匿名变量之间不存在重复声明。 (在Lua等编程语言里，匿名变量也被叫做哑元变量。)</li>
+</ul>
+<p>注意事项：</p>
+<ol>
+<li>函数外的每个语句都必须以关键字开始（var、const、func等）</li>
+<li>:=不能使用在函数外。</li>
+<li>_多用于占位，表示忽略值。</li>
+</ol>
+<h1 id="二-常量"><a href="#二-常量" class="headerlink" title="二.常量"></a>二.常量</h1><ul>
+<li><p>常量在定义时必须赋值</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pi = <span class="number">3.1415926</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多个常量定义</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">    a = <span class="number">12</span></span><br><span class="line">    b = <span class="number">13</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">// const同时声明多个常量时，如果省略了值则表示和上面一行的值相同</span></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">    x = <span class="number">23</span></span><br><span class="line">    y</span><br><span class="line">    z</span><br><span class="line">)</span><br><span class="line"><span class="comment">//上列常量的值都是23</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="2-1-iota"><a href="#2-1-iota" class="headerlink" title="2.1 iota"></a>2.1 iota</h2><ul>
+<li>iota是go语言的常量计数器，只能在常量的表达式中使用。</li>
+<li>iota在const关键字出现时将被重置为0。const中每新增一行常量声明将使iota计数一次(iota可理解为const语句块中的行索引)。 使用iota能简化定义，在定义枚举时很有用。</li>
+<li>举例</li>
+</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">		n1 = <span class="literal">iota</span> <span class="comment">//0</span></span><br><span class="line">		n2        <span class="comment">//1</span></span><br><span class="line">		n3        <span class="comment">//2</span></span><br><span class="line">		n4        <span class="comment">//3</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> n5 = <span class="literal">iota</span><span class="comment">//0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-1-常见的iota示例"><a href="#2-1-1-常见的iota示例" class="headerlink" title="2.1.1 常见的iota示例"></a>2.1.1 常见的iota示例</h3><ul>
+<li><p>使用_跳过某些值</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">		n1 = <span class="literal">iota</span> <span class="comment">//0</span></span><br><span class="line">		n2        <span class="comment">//1</span></span><br><span class="line">		_</span><br><span class="line">		n4        <span class="comment">//3</span></span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>iota声明中间插队</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">		n1 = <span class="literal">iota</span> <span class="comment">//0</span></span><br><span class="line">		n2 = <span class="number">100</span>  <span class="comment">//100</span></span><br><span class="line">		n3 = <span class="literal">iota</span> <span class="comment">//2</span></span><br><span class="line">		n4        <span class="comment">//3</span></span><br><span class="line">	)</span><br><span class="line">	<span class="keyword">const</span> n5 = <span class="literal">iota</span> <span class="comment">//0</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定义数量级 （这里的&lt;&lt;表示左移操作，1&lt;&lt;10表示将1的二进制表示向左移10位，也就是由1变成了10000000000，也就是十进制的1024。同理2&lt;&lt;2表示将2的二进制表示向左移2位，也就是由10变成了1000，也就是十进制的8。）</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">		_  = <span class="literal">iota</span></span><br><span class="line">		KB = <span class="number">1</span> &lt;&lt; (<span class="number">10</span> * <span class="literal">iota</span>)</span><br><span class="line">		MB = <span class="number">1</span> &lt;&lt; (<span class="number">10</span> * <span class="literal">iota</span>)</span><br><span class="line">		GB = <span class="number">1</span> &lt;&lt; (<span class="number">10</span> * <span class="literal">iota</span>)</span><br><span class="line">		TB = <span class="number">1</span> &lt;&lt; (<span class="number">10</span> * <span class="literal">iota</span>)</span><br><span class="line">		PB = <span class="number">1</span> &lt;&lt; (<span class="number">10</span> * <span class="literal">iota</span>)</span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多个iota定义在一行</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">		a, b = <span class="literal">iota</span> + <span class="number">1</span>, <span class="literal">iota</span> + <span class="number">2</span> <span class="comment">//1,2</span></span><br><span class="line">		c, d                      <span class="comment">//2,3</span></span><br><span class="line">		e, f                      <span class="comment">//3,4</span></span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+
+          
+        
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Golang</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Go学习笔记//" class="article-tag-list-link color2">Go学习笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/11/GO语言基础变量与常量/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Go语言的环境搭建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/09/Go语言的环境搭建/">Go语言的环境搭建</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/09/Go语言的环境搭建/" class="archive-article-date">
+  	<time datetime="2020-09-09T06:25:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+          
+            <h1 id="1-下载地址"><a href="#1-下载地址" class="headerlink" title="1.下载地址"></a>1.下载地址</h1><blockquote>
+<p>Go官网下载地址：<a href="https://golang.org/dl/" target="_blank" rel="noopener">https://golang.org/dl/</a><br>Go官方镜像站（推荐）：<a href="https://golang.google.cn/dl/" target="_blank" rel="noopener">https://golang.google.cn/dl/</a></p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/winterhu23/cloudimg/data/go.png" alt="go官网图"></p>
+<ul>
+<li>控制台查看go版本：go version</li>
+<li>查看 go 环境有关的信息：go env<h1 id="2-环境配置"><a href="#2-环境配置" class="headerlink" title="2.环境配置"></a>2.环境配置</h1><blockquote>
+<p>GOPATH:保存的是我们的工作目录<br>GOROOT:golang的安装目录   </p>
+</blockquote>
+</li>
+<li>注意：<strong>GOPRTH和GOROOT不要设置为相同目录</strong>，如果你生成了一个名字为go的可执行文件，那么安装GOBIN目录下后实际上会覆盖golang本身的go程序。导致golang环境被破坏。<blockquote>
+<p>在GOPATH保存的工作目录建立三个文件夹：bin，pkg，src</p>
+</blockquote>
+<h1 id="3-踩坑记录"><a href="#3-踩坑记录" class="headerlink" title="3.踩坑记录"></a>3.踩坑记录</h1></li>
+<li>在桌面打开cmd查看GOPATH的位置和在vscode启动cmd的GOPATH位置不一致</li>
+<li>解决方法：在vscode里的cmd通过 set GOPATH=[你所设置的GOPATH路径]</li>
+</ul>
+
+          
+        
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Golang</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Go学习笔记//" class="article-tag-list-link color2">Go学习笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/09/Go语言的环境搭建/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-同位语，插入语" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -922,1080 +1666,9 @@
 
 
   
-    <article id="post-简单句的核心构成" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/21/简单句的核心构成/">简单句的核心构成</a>
-    </h1>
-  
-
-        
-        <a href="/2020/08/21/简单句的核心构成/" class="archive-article-date">
-  	<time datetime="2020-08-21T12:51:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-          
-            <h1 id="语法讲解"><a href="#语法讲解" class="headerlink" title="语法讲解"></a>语法讲解</h1><ul>
-<li>构成简单句的核心就是<strong>名词</strong>和<strong>动词</strong><ul>
-<li>名词作主语</li>
-<li>动词作谓语<ul>
-<li>谓语动词作为简单句的核心，它的不同决定了简单句的不同，可以细分为5类不同的核心构成：主谓，主谓宾，主谓宾补，主谓双宾，主系表<h2 id="1-主谓"><a href="#1-主谓" class="headerlink" title="1.主谓"></a>1.主谓</h2></li>
-<li>主谓 = 主语 + 不及物动词(vi.) <blockquote>
-<p>动作不涉及其他的物，即为不及物动词，后续不用接宾语，主谓两部分表诉完整<br>Everybody else loses</p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="2-主谓宾"><a href="#2-主谓宾" class="headerlink" title="2.主谓宾"></a>2.主谓宾</h2><ul>
-<li>主谓宾 = 主语 + 及物动词(vt.) + 宾语<blockquote>
-<p>动作涉及其他的物，即为及物动词，需要把涉及的对象(动词的宾语)接在后面，主谓宾三部分才完整</p>
-<p>Everybody loves a fat pay rise</p>
-</blockquote>
-</li>
-</ul>
-<h2 id="3-主谓双宾"><a href="#3-主谓双宾" class="headerlink" title="3.主谓双宾"></a>3.主谓双宾</h2><ul>
-<li>主谓双宾 = 主语 及物动词 + 两个宾语(人+物 / 物+人)<blockquote>
-<p>直接宾语指物，间接宾语指人</p>
-<p>They gave justices permanent positions<br>They gave permanent positions to justices</p>
-</blockquote>
-</li>
-</ul>
-<h2 id="4-主谓宾补"><a href="#4-主谓宾补" class="headerlink" title="4.主谓宾补"></a>4.主谓宾补</h2><ul>
-<li>主谓宾补 = 主语 + 及物动词 + 宾语 + 宾语的补足语(简称宾补)<blockquote>
-<p>宾补是用来补充说明宾语的<br>You always keep your eyes open</p>
-</blockquote>
-</li>
-</ul>
-<h2 id="5-主系表"><a href="#5-主系表" class="headerlink" title="5.主系表"></a>5.主系表</h2><ul>
-<li>主系表 = 主语 + 系动词 + 表语<blockquote>
-<p>系动词无实际意义，起连接作用。<br>This is dangerous game  </p>
-</blockquote>
-</li>
-</ul>
-
-          
-        
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">英语语法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/英语笔记//" class="article-tag-list-link color5">英语笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/08/21/简单句的核心构成/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-英语语法思维导图" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/13/英语语法思维导图/">英语语法思维导图</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/13/英语语法思维导图/" class="archive-article-date">
-  	<time datetime="2020-07-13T08:09:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-          
-            <h1 id="英语语法"><a href="#英语语法" class="headerlink" title="英语语法"></a>英语语法</h1><h2 id="简单句"><a href="#简单句" class="headerlink" title="简单句"></a>简单句</h2><h3 id="简单句核心"><a href="#简单句核心" class="headerlink" title="简单句核心"></a>简单句核心</h3><ul>
-<li><p><strong><a href="/2020/08/21/简单句的核心构成/" title="简单句的核心构成">简单句的核心构成</a></strong>(主语+谓语动词+?)</p>
-<ul>
-<li>主谓</li>
-<li>主谓宾</li>
-<li>主谓双宾</li>
-<li>主谓宾补</li>
-<li>主系表</li>
-</ul>
-</li>
-<li><p><strong><a href="/2020/08/21/简单句的核心变化/" title="简单句的核心变化">简单句的核心变化</a></strong></p>
-<ul>
-<li><p>谓语动词的变化</p>
-<ul>
-<li>时态</li>
-<li>情态</li>
-<li>语态</li>
-<li>否定</li>
-<li>强调</li>
-</ul>
-</li>
-<li><p>主语，宾语，表语的变化</p>
-<ul>
-<li>名词，代词</li>
-<li>非谓语动词doing</li>
-<li>非谓语动词to do</li>
-<li>并列多个</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="简单句的扩展"><a href="#简单句的扩展" class="headerlink" title="简单句的扩展"></a>简单句的扩展</h3><ul>
-<li><p><strong><a href="/2020/08/29/词性角度的扩展/" title="词性角度的扩展">词性角度的扩展</a></strong></p>
-<ul>
-<li>限定词</li>
-<li>形容词，副词</li>
-<li>介词短语</li>
-</ul>
-</li>
-<li><p>成分角度的扩展</p>
-<ul>
-<li><strong><a href="/2020/08/31/非谓语动词作定语，状语/" title="非谓语动词作定语，状语">非谓语动词作定语，状语</a></strong></li>
-<li><a href="/2020/08/31/同位语，插入语/" title="同位语，插入语">同位语，插入语</a>
-<h2 id="长难句"><a href="#长难句" class="headerlink" title="长难句"></a>长难句</h2></li>
-</ul>
-</li>
-</ul>
-<h3 id="并列句"><a href="#并列句" class="headerlink" title="并列句"></a>并列句</h3><ul>
-<li>并列句的构成</li>
-<li>并列句的省略</li>
-</ul>
-<h3 id="复合句-主句＋从句"><a href="#复合句-主句＋从句" class="headerlink" title="复合句=主句＋从句"></a>复合句=主句＋从句</h3><ul>
-<li><p>名词性从句</p>
-<ul>
-<li>宾语从句</li>
-<li>表语从句</li>
-<li>主语从句</li>
-<li>同位语从句</li>
-</ul>
-</li>
-<li><p>定语从句</p>
-</li>
-<li><p>状语从句</p>
-</li>
-</ul>
-<h3 id="特殊句式"><a href="#特殊句式" class="headerlink" title="特殊句式"></a>特殊句式</h3><ul>
-<li>倒装</li>
-<li>强调</li>
-<li>虚拟</li>
-</ul>
-<h2 id="长难句分析"><a href="#长难句分析" class="headerlink" title="长难句分析"></a>长难句分析</h2><h3 id="基本结构长难句"><a href="#基本结构长难句" class="headerlink" title="基本结构长难句"></a>基本结构长难句</h3><ul>
-<li><p>断开长难句</p>
-<ul>
-<li>标点</li>
-<li>连接词</li>
-<li>分析主谓</li>
-</ul>
-</li>
-<li><p>简化长难句</p>
-</li>
-</ul>
-<h3 id="特殊结构长难句分析"><a href="#特殊结构长难句分析" class="headerlink" title="特殊结构长难句分析"></a>特殊结构长难句分析</h3><ul>
-<li>分裂结构</li>
-<li>嵌套结构</li>
-</ul>
-<h2 id="平行结构"><a href="#平行结构" class="headerlink" title="平行结构"></a>平行结构</h2>
-          
-        
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/思维导图//" class="article-tag-list-link color5">思维导图</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/13/英语语法思维导图/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-英语词根与单词的说文解字" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/09/英语词根与单词的说文解字/">英语词根与单词的说文解字</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/09/英语词根与单词的说文解字/" class="archive-article-date">
-  	<time datetime="2020-05-09T01:59:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-          
-            <!-- TOC -->
-
-<ul>
-<li><a href="#第一部分-英语词根的基本知识">第一部分 英语词根的基本知识</a><ul>
-<li><a href="#一-什么是词根">一 什么是词根</a></li>
-<li><a href="#二-英语词汇中的词根">二 英语词汇中的词根</a></li>
-<li><a href="#三-英语词根的形态与含义之由来">三 英语词根的形态与含义之由来</a></li>
-<li><a href="#四-从词根看词缀">四 从词根看词缀</a></li>
-<li><a href="#五-从词素角度反思英语构词法">五 从词素角度反思英语构词法</a></li>
-</ul>
-</li>
-</ul>
-<!-- /TOC -->
-<h1 id="第一部分-英语词根的基本知识"><a href="#第一部分-英语词根的基本知识" class="headerlink" title="第一部分 英语词根的基本知识"></a>第一部分 英语词根的基本知识</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">The shortest and best way to learning a language,is to know the roots of it,that is,those original,primitive words of which other words are made.</span><br><span class="line">-- Lord Chesterfield</span><br><span class="line">学习一门语言文字的最短最佳途径，是掌握它的词根，亦即那些其他单词借助形成的初始原生词</span><br><span class="line">--切斯特菲尔伯爵</span><br></pre></td></tr></table></figure>
-
-<h2 id="一-什么是词根"><a href="#一-什么是词根" class="headerlink" title="一 什么是词根"></a>一 什么是词根</h2><ul>
-<li><p>词素构词理论：一切单词都是由一个或多个词素构成的，词素则是最低一级由区别性的语法单位。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    &#123;—— 自由词素 —— 单词词根(自由词根)    &#125;</span><br><span class="line">词素|                                   |—— 词根   &#125;</span><br><span class="line">    |           &#123;—— 非单词词根(黏附词根) &#125;          |—— 构词成分</span><br><span class="line">    &#123;—— 黏附词素|                                  |</span><br><span class="line">                &#123;—— 词缀                          &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>词根定义：<strong>词根是构词的基本词素，它与词缀相对，并带有主要的词汇信息。词根分为两种，能独立构词的是自由词根，必须与其他词素结合构词的是黏附词根</strong></p>
-</li>
-<li><p>词根词素的理论对汉语同样适用：</p>
-<ul>
-<li>1.能独立成字的基本单位,如:人，手，心……。</li>
-<li>2.不能独立成字的义符偏旁或部首，如：扌，亻，讠……。<h2 id="二-英语词汇中的词根"><a href="#二-英语词汇中的词根" class="headerlink" title="二 英语词汇中的词根"></a>二 英语词汇中的词根</h2></li>
-</ul>
-</li>
-<li><p>英语的历史</p>
-<ul>
-<li>公元450前 —— 主要为凯尔特语（Celtic）</li>
-<li>公元449~1150年（古英语时期Old English） —— 日耳曼语（Germanic），如今被称为本族词语（Native Words）的主体。</li>
-<li>公元1150~1500年（中古英语时期Middle English） —— 拉丁语（Latin）与古法语词(Old French)</li>
-<li>公元1500至今（现代英语Modern English） —— 拉丁词和希腊词（Greek）进入英语。今天，拉丁词与希腊词被统称为古典词语（Classical Words）</li>
-</ul>
-</li>
-<li><p>各种语源的单词在英语词汇总量中的百分比是：</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">语种</th>
-<th align="center">百分比</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">日耳曼语源（即本族语源）</td>
-<td align="center">33%</td>
-</tr>
-<tr>
-<td align="center">拉丁与希腊语源（即古典语源）</td>
-<td align="center">56%</td>
-</tr>
-<tr>
-<td align="center">凯尔特语源</td>
-<td align="center">2%</td>
-</tr>
-<tr>
-<td align="center">混合语源</td>
-<td align="center">3%</td>
-</tr>
-<tr>
-<td align="center">东方，非洲，美洲等语源</td>
-<td align="center">6%</td>
-</tr>
-</tbody></table>
-<ul>
-<li>本族语占英语词汇比重大，大部分是表示基本事物，基本概念与基本关系的使用率很高的常用词，如：yes，many，lady，day等初学者熟悉的单词</li>
-<li>本族语（33%）的词根多是独立使用自由词根</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">自由词素</th>
-<th align="center">词的属性</th>
-<th align="center">解释</th>
-<th align="center">单词</th>
-<th align="center">解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">we</td>
-<td align="center">pron</td>
-<td align="center">我们</td>
-<td align="center">we</td>
-<td align="center">我们</td>
-</tr>
-<tr>
-<td align="center">the</td>
-<td align="center">art</td>
-<td align="center">这，那</td>
-<td align="center">the</td>
-<td align="center">这，那</td>
-</tr>
-<tr>
-<td align="center">do</td>
-<td align="center">v</td>
-<td align="center">做</td>
-<td align="center">do</td>
-<td align="center">做</td>
-</tr>
-</tbody></table>
-<ul>
-<li>古典语源单词词根情况（56%）</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">单词</th>
-<th align="center">词根</th>
-<th align="center">解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">state,establish</td>
-<td align="center">st(at)</td>
-<td align="center">站</td>
-</tr>
-<tr>
-<td align="center">union,united</td>
-<td align="center">un</td>
-<td align="center">一</td>
-</tr>
-<tr>
-<td align="center">perfect</td>
-<td align="center">fect</td>
-<td align="center">做</td>
-</tr>
-</tbody></table>
-<ul>
-<li>古典语的特点：古典语词根数量有限，孳生能力强。我们可以利用这个特点去攻克词汇学习难关。<h2 id="三-英语词根的形态与含义之由来"><a href="#三-英语词根的形态与含义之由来" class="headerlink" title="三 英语词根的形态与含义之由来"></a>三 英语词根的形态与含义之由来</h2></li>
-<li>一个黏附词根的形态，一般取自某一个古典语基本词的词干(Stem)部分，它的含义来自这个基本词的本意。</li>
-<li>拉丁语来说，动词通过词尾来表达态，式，时，数，人称：名词则通过词尾的变化来表达性，数，格。</li>
-<li>拉丁动词 amo （I love，我爱）主动态直陈式现在时的变化位</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">人称</th>
-<th align="center">单数</th>
-<th align="center">复数</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">一</td>
-<td align="center">amo</td>
-<td align="center">amamus</td>
-</tr>
-<tr>
-<td align="center">二</td>
-<td align="center">amas</td>
-<td align="center">amatis</td>
-</tr>
-<tr>
-<td align="center">三</td>
-<td align="center">amat</td>
-<td align="center">amant</td>
-</tr>
-</tbody></table>
-<ul>
-<li>拉丁阴性名词 insula（岛）的变格表</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">格</th>
-<th align="center">单数</th>
-<th align="center">复数</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">主格</td>
-<td align="center">insula</td>
-<td align="center">insulae</td>
-</tr>
-<tr>
-<td align="center">宾格</td>
-<td align="center">insulam</td>
-<td align="center">insulas</td>
-</tr>
-<tr>
-<td align="center">属格</td>
-<td align="center">insulae</td>
-<td align="center">insularum</td>
-</tr>
-<tr>
-<td align="center">与格</td>
-<td align="center">insulae</td>
-<td align="center">insulis</td>
-</tr>
-<tr>
-<td align="center">夺格</td>
-<td align="center">insula</td>
-<td align="center">insulis</td>
-</tr>
-</tbody></table>
-<ul>
-<li>以上表格可见，尽管词尾变化眼花缭乱，但是词干的部分（am和insul）的形态却是固定的</li>
-<li>英语通过两种方式吸收外来语成分<ul>
-<li>第一种，直接输入外来语，并且根据本族语的模式对之进行”正字””正音”等改造与同化。<ul>
-<li>上4个am（爱）的同根拉丁词，输入英语后，被改造成了 amatory(恋爱的)，amicable(友好的)，amorous(色情的)和enamour(使迷恋的)</li>
-</ul>
-</li>
-<li>第二种，利用外来语成分，按照自己的规则创造出来的单词<ul>
-<li>如：拉丁词 insul 加上表达”素”的后缀-in，创造出表达一种新化合物的单词 insulin(胰岛素)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>以古典语基本词的词义为依据，确定英语中相应的黏附词根的含义，就保证了该词根含义的统一性和单一性。这种统一性和单一性是利用黏附词根分析古典语源的英语单词的词义的先决条件<h2 id="四-从词根看词缀"><a href="#四-从词根看词缀" class="headerlink" title="四 从词根看词缀"></a>四 从词根看词缀</h2></li>
-<li>根据词根的性质把构词词缀分为两种：能够和自由词根和单词结合的是派生词缀，只能与黏附词根结合的是原生词缀。</li>
-<li>词根与词缀是的关系是主从关系。词根与词缀是构词的两个要素，词根是基本词素，词缀是辅助词素。从形态上来说，词根可以不带词缀而独立构词，即自由词根单独构成基本单词，词缀却必须依赖词根才能构词。</li>
-<li>我们把原生词缀分成4类：介词性或副词性原生词缀，修饰/限定性原生词缀，名词性原生词缀和动词性原生词缀。</li>
-</ul>
-<ol>
-<li>介词性或副词性原生词缀。这类词缀的前身一般是介词，有道也可以作副词。他们主要依附于动词性的词根，指示或限定这个动作的时间，方向，方式等。<ul>
-<li>1）ad-（ac-,af-,ag-,al-,an-,ap-,ar-,as-,at-) = towards 向</li>
-<li>[例] af- + fect(to make)</li>
-<li>-&gt;affect(to make something towards,or act upon 影响)</li>
-</ul>
-</li>
-<li>修饰/限定性原生词缀。这类词缀的前身多是表达否定，数量，状态等含义的副词，数词或形容词。<ul>
-<li>tri- = three 三</li>
-<li>[例] tri- + angul(angle) + -ar(形容词后缀)</li>
-<li>-&gt;triangular(of three angles 三角的)</li>
-</ul>
-</li>
-<li>名词性原生词缀。这类词缀都是名词后缀，它们的前身多是一些表示性质，状态，特征的名词或词根。主要有-acy，-ance,-ence,-ion,-ment,-tude,-ity,-y,-ure等。这些名词后缀的意思大致等于”the state,act,condition or quality of（doing or being）”<ul>
-<li>vis(to see) + ion</li>
-<li>-&gt;vision(the ability of seeing 视力)</li>
-</ul>
-</li>
-<li>动词性原生词缀。这类词缀前身是动词性词根，他们依附在名词性或者形容词性的词根上，使之动词化。主要有3个：-ate，-fy,-ish。它们的意思都相当于”to make””to have”或者”to cause to be” <ul>
-<li>un(one) + -i + -fy</li>
-<li>unify(to make into one body 使合一，统一)<h2 id="五-从词素角度反思英语构词法"><a href="#五-从词素角度反思英语构词法" class="headerlink" title="五 从词素角度反思英语构词法"></a>五 从词素角度反思英语构词法</h2></li>
-</ul>
-</li>
-</ol>
-<ul>
-<li>按照词根是否加缀以及在何种词根上加缀，可将派生法分为三级<ul>
-<li>零级派生：词根不加缀，可能产生简单词，原始复合词，转化词和合成词</li>
-<li>一级派生：黏附词根加原生词缀，产生原始派生词（或称原生词）</li>
-<li>二级派生：自由词根或单词加上派生词缀，即传统意义上的派生词。</li>
-</ul>
-</li>
-<li>基于词素的英语构词法体系<ul>
-<li>（*)的派生词较为少见</li>
-<li>（[]）中标出的是传统构词法的相应区域</li>
-</ul>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="left">-</th>
-<th align="left">-</th>
-<th align="center">零原生词缀</th>
-<th align="center">零派生词缀</th>
-<th align="center">原生词缀</th>
-<th align="center">派生词缀</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">黏附</td>
-<td align="left">单个</td>
-<td align="center">简单句</td>
-<td align="center">-</td>
-<td align="center">原始派生词即原生词</td>
-<td align="center">-</td>
-</tr>
-<tr>
-<td align="left">词根</td>
-<td align="left">双个</td>
-<td align="center">原始复合词</td>
-<td align="center">-</td>
-<td align="center">原始派生词即原生词*</td>
-<td align="center">-</td>
-</tr>
-<tr>
-<td align="left">自由</td>
-<td align="left">单个</td>
-<td align="center">-</td>
-<td align="center">转化词[转化法]</td>
-<td align="center">-</td>
-<td align="center">（二次）派生词[派生法]</td>
-</tr>
-<tr>
-<td align="left">词根</td>
-<td align="left">双个</td>
-<td align="center">-</td>
-<td align="center">合成词[合成法]</td>
-<td align="center">-</td>
-<td align="center">（二次）派生词*[派生法]</td>
-</tr>
-</tbody></table>
-
-          
-        
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/英语学习//" class="article-tag-list-link color5">英语学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/09/英语词根与单词的说文解字/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-git学习笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/10/git学习笔记/">git学习笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/10/git学习笔记/" class="archive-article-date">
-  	<time datetime="2020-03-10T14:04:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-          
-            <!-- TOC -->
-
-<ul>
-<li><a href="#1git%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C">1.git命令行操作</a><ul>
-<li><a href="#11-%E6%9C%AC%E5%9C%B0%E5%BA%93%E5%88%9D%E5%A7%8B%E5%8C%96">1.1 本地库初始化</a></li>
-<li><a href="#12-%E8%AE%BE%E7%BD%AE%E7%AD%BE%E5%90%8D">1.2 设置签名</a></li>
-<li><a href="#13-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">1.3 基本操作</a><ul>
-<li><a href="#131-%E7%8A%B6%E6%80%81%E6%9F%A5%E7%9C%8B">1.3.1 状态查看</a></li>
-<li><a href="#132-%E6%B7%BB%E5%8A%A0">1.3.2 添加</a></li>
-<li><a href="#133-%E6%8F%90%E4%BA%A4">1.3.3 提交</a></li>
-<li><a href="#134-%E6%9F%A5%E7%9C%8B%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95">1.3.4 查看历史记录</a></li>
-<li><a href="#135-%E5%89%8D%E8%BF%9B%E5%92%8C%E5%90%8E%E9%80%80">1.3.5 前进和后退</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- /TOC -->
-<h1 id="1-git命令行操作"><a href="#1-git命令行操作" class="headerlink" title="1.git命令行操作"></a>1.git命令行操作</h1><h2 id="1-1-本地库初始化"><a href="#1-1-本地库初始化" class="headerlink" title="1.1 本地库初始化"></a>1.1 本地库初始化</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p><strong>注意：.git目录存放的是本地库相关的子文件目录和文件，不要删除，也不要胡乱修改</strong></p>
-<h2 id="1-2-设置签名"><a href="#1-2-设置签名" class="headerlink" title="1.2 设置签名"></a>1.2 设置签名</h2></li>
-<li><p>用户名：test</p>
-</li>
-<li><p>Email地址：<a href="mailto:test@test.qq" target="_blank" rel="noopener">test@test.qq</a></p>
-</li>
-<li><p>作用：用于区分不同开发人员的身份</p>
-</li>
-<li><p>命令</p>
-<ul>
-<li><p><strong>项目级别/仓库级别</strong>：仅在本地库范围有效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config user.name 用户名</span><br><span class="line">git config user.email 邮箱</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>信息保存位置：./.git/config文件</p>
-</li>
-<li><p><strong>系统用户级别</strong>：登录当前操作系统的用户范围</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name 用户名</span><br><span class="line">git config --global user.email 邮箱</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>信息保存位置：~/.gitconfig 文件</p>
-</li>
-<li><p><strong>级别优先级</strong></p>
-<ul>
-<li>就近原则：项目优先级优先与系统优先级，二者都有时采用项目优先级</li>
-<li>如果只有系统优先级的签名，就系统优先级为准</li>
-<li>二者都没有不允许<h2 id="1-3-基本操作"><a href="#1-3-基本操作" class="headerlink" title="1.3 基本操作"></a>1.3 基本操作</h2><h3 id="1-3-1-状态查看"><a href="#1-3-1-状态查看" class="headerlink" title="1.3.1 状态查看"></a>1.3.1 状态查看</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>查看工作区，暂存区状态</p>
-<h3 id="1-3-2-添加"><a href="#1-3-2-添加" class="headerlink" title="1.3.2 添加"></a>1.3.2 添加</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add 文件名</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将工作区的 新建/修改 添加到暂存区</p>
-<h3 id="1-3-3-提交"><a href="#1-3-3-提交" class="headerlink" title="1.3.3 提交"></a>1.3.3 提交</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &quot;提交的注释&quot; 文件名</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将暂存区的内容提交到本地库 </p>
-<h3 id="1-3-4-查看历史记录"><a href="#1-3-4-查看历史记录" class="headerlink" title="1.3.4 查看历史记录"></a>1.3.4 查看历史记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>多屏显示控制方式：</p>
-<ul>
-<li>空格向下翻页</li>
-<li>b向上翻页</li>
-<li>q退出<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --pretty==oneline</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --oneline</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>显示信息为一行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>HEAD@{移动到当前版本需要多少部}</p>
-</li>
-<li><p>推荐使用git reflog</p>
-<h3 id="1-3-5-前进和后退"><a href="#1-3-5-前进和后退" class="headerlink" title="1.3.5 前进和后退"></a>1.3.5 前进和后退</h3></li>
-</ul>
-
-          
-        
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Git//" class="article-tag-list-link color4">Git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/10/git学习笔记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-二-进程管理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/28/二-进程管理/">二.进程管理</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/28/二-进程管理/" class="archive-article-date">
-  	<time datetime="2019-12-27T16:02:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-          
-            <h1 id="2-1-进程"><a href="#2-1-进程" class="headerlink" title="2.1 进程"></a>2.1 进程</h1><h2 id="2-1-2-什么是进程"><a href="#2-1-2-什么是进程" class="headerlink" title="2.1.2 什么是进程"></a>2.1.2 什么是进程</h2><ul>
-<li><p>定义：一个正在运行的程序就是一个进程</p>
-</li>
-<li><p>进程包括的内容</p>
-<blockquote>
-<p>程序代码<br>  cpu寄存器的值，包括通用寄存器，程序计数器<br>  堆（heap），保存进程运行时动态分配的内存空间<br>  栈（stack），保存运行的上下文或保存被调用函数的形参和句部变量</p>
-</blockquote>
-</li>
-<li><p>进程时一个动态的概念，它由两部分组成：程序和该程序的运行上下文</p>
-<h2 id="2-1-3-进程的特性"><a href="#2-1-3-进程的特性" class="headerlink" title="2.1.3 进程的特性"></a>2.1.3 进程的特性</h2></li>
-<li><p>进程的三个特性：动态性，独立性，并发性</p>
-<ul>
-<li>动态性：进程是一个正在运行的程序，它是一个动态的概念。</li>
-<li>独立性：一个进程是一个独立的实体，它是计算机资源使用的单位。</li>
-<li>并发性：宏观上，各个进程同时在系统中相互独立的运行。微观上，在某个特定的时刻，只有一个进程在运行，实际上，各个进程之间是一个接一个顺序运行的。<h2 id="2-1-4-进程的创建与终止"><a href="#2-1-4-进程的创建与终止" class="headerlink" title="2.1.4 进程的创建与终止"></a>2.1.4 进程的创建与终止</h2></li>
-</ul>
-</li>
-<li><p>主要由4个引起进程创建的事件</p>
-<ul>
-<li>系统初始化的时候会创建新进程</li>
-<li>一个正在运行的进程执行了创建进程的系统调用</li>
-<li>用户发送请求创建一个新进程</li>
-<li>在初始化一个批处理作业</li>
-</ul>
-</li>
-<li><p>4个情况下，进程会被终止</p>
-<ul>
-<li>正常退出：程序正常运行结束</li>
-<li>错误退出：发现一个致命错误，如配置文件被删除了</li>
-<li>致命错误：由程序设计的缺陷，造成一些致命错误，如非法操作，除0</li>
-<li>被其他进程所杀死<h2 id="2-1-5-进程的状态"><a href="#2-1-5-进程的状态" class="headerlink" title="2.1.5 进程的状态"></a>2.1.5 进程的状态</h2></li>
-</ul>
-</li>
-<li><p>进程的三种基本状态：运行，阻塞，就绪状态</p>
-<ul>
-<li><p>运行状态：指进程占有cpu，并且在cpu上运行</p>
-</li>
-<li><p>就绪状态：进程已经具备运行条件，但cpu正在运行其他进程。</p>
-</li>
-<li><p>阻塞状态（或称等待状态）：指进程因为等待某种事件的发生而暂时不能运行的状态。</p>
-<blockquote>
-<p>导致就绪状态是外因，导致阻塞状态是内因。</p>
-</blockquote>
-<p><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1577508997725&di=ce2754f81af3395da4327ee6a722bbb0&imgtype=jpg&src=http%3A%2F%2Fimg3.imgtn.bdimg.com%2Fit%2Fu%3D3532151038%2C3830252401%26fm%3D214%26gp%3D0.jpg" alt></p>
-</li>
-</ul>
-</li>
-<li><p>程序 = 数据结构 + 算法</p>
-</li>
-<li><p>在操作系统中，进程的数据结果是进程控制块PCB（Process Control Block),它主要包括3个内容</p>
-<blockquote>
-<p>进程管理方面的信息<br>  存储管理方面的信息<br>  文件管理方面的信息</p>
-</blockquote>
-</li>
-<li><p>把PCB看作进程的唯一标识</p>
-<ul>
-<li>即创建进程，生成并初始化一个PCB</li>
-<li>撤销进程，回收它的PCB</li>
-</ul>
-</li>
-<li><p>进程的PCB放在内存中的</p>
-<h1 id="2-1-6-状态队列"><a href="#2-1-6-状态队列" class="headerlink" title="2.1.6 状态队列"></a>2.1.6 状态队列</h1></li>
-<li><p>系统中所有进程的当前状态，不同的状态分别用不同的队列来表示</p>
-<ul>
-<li>运行状态为运行队列</li>
-<li>就绪状态为就绪队列</li>
-<li>阻塞状态根据阻塞原因分别构成相应的队列</li>
-</ul>
-</li>
-</ul>
-<h1 id="2-2-线程"><a href="#2-2-线程" class="headerlink" title="2.2 线程"></a>2.2 线程</h1><ul>
-<li>实体的两个特性<ul>
-<li>各个实体之间可以并发运行</li>
-<li>实体之间共享相同的内存空间<blockquote>
-<p>进程只满足第一个特性，所以提出了线程</p>
-</blockquote>
-<h2 id="2-2-1-线程的概念"><a href="#2-2-1-线程的概念" class="headerlink" title="2.2.1 线程的概念"></a>2.2.1 线程的概念</h2></li>
-</ul>
-</li>
-<li>线程：进程中一条执行的流程。</li>
-<li>进程 = 线程 + 资源平台（进程把一组相关的资源组合在一起，构成资源平台）<blockquote>
-<p>在同一个进程中，或同一个资源平台中，可以同时存在多个线程<br>  <strong>线程是CPU调度的基本单位</strong><br>  各个线程共享地址空间</p>
-</blockquote>
-</li>
-<li>进程所拥有的资源，实际上就是PCB包括的组要内容，进程管理方面的信息，存储管理方面的信息和文件管理方面的信息。所有的这些资源又可以分成2部分<ul>
-<li>共享资源，如全局变量</li>
-<li>独享资源，如寄存器和栈</li>
-</ul>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="left">进程</th>
-<th align="left">线程</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">系统资源分配的单位</td>
-<td align="left">CPU调度的基本单位</td>
-</tr>
-<tr>
-<td align="left">拥有完整的资源平台</td>
-<td align="left">只独享必不可少的资源，栈和寄存器</td>
-</tr>
-<tr>
-<td align="left">有就绪，运行，阻塞状态</td>
-<td align="left">有就绪，运行，阻塞状态</td>
-</tr>
-</tbody></table>
-<ul>
-<li>线程能有效的减少并发执行的时间和空间开销，线程创建时间，终止时间和线程切换时间都比进程短。</li>
-<li>时间片是分配给线程的</li>
-</ul>
-<h1 id="2-3-进程间的通信与同步"><a href="#2-3-进程间的通信与同步" class="headerlink" title="2.3 进程间的通信与同步"></a>2.3 进程间的通信与同步</h1><h2 id="2-3-1"><a href="#2-3-1" class="headerlink" title="2.3.1"></a>2.3.1</h2><ul>
-<li>进程间的通信分为两个大类<ul>
-<li>低级通信：如信号量和信号</li>
-<li>高级通信<ul>
-<li>共享内存</li>
-<li>消息传递</li>
-<li>管道</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="2-3-2-进程的互斥"><a href="#2-3-2-进程的互斥" class="headerlink" title="2.3.2 进程的互斥"></a>2.3.2 进程的互斥</h2><ul>
-<li>需要互斥访问的共享资源称为”临界区”</li>
-<li>互斥访问的四个条件</li>
-</ul>
-<ol>
-<li>任何两个进程不能同时进入临界区</li>
-<li>不能事先假设cpu的个数和运行速度</li>
-<li>当一个进程在临界区外，不能妨碍其他的进程进入临界区</li>
-<li>任何一个进程进入临界区都有时间限制<h2 id="2-3-3-基于关闭中断的互斥等待"><a href="#2-3-3-基于关闭中断的互斥等待" class="headerlink" title="2.3.3 基于关闭中断的互斥等待"></a>2.3.3 基于关闭中断的互斥等待</h2><h2 id="2-3-4-基于繁忙等待的互斥实现"><a href="#2-3-4-基于繁忙等待的互斥实现" class="headerlink" title="2.3.4 基于繁忙等待的互斥实现"></a>2.3.4 基于繁忙等待的互斥实现</h2></li>
-<li>加锁标志位法</li>
-<li>强制轮流法</li>
-<li>Peterson方法<h2 id="2-3-5-信号量"><a href="#2-3-5-信号量" class="headerlink" title="2.3.5 信号量"></a>2.3.5 信号量</h2></li>
-</ol>
-<ul>
-<li>p原语：申请一个空闲资源</li>
-<li>v原语：释放一个资源</li>
-<li>pv原语要配对使用<h2 id="2-3-5-进程的同步"><a href="#2-3-5-进程的同步" class="headerlink" title="2.3.5 进程的同步"></a>2.3.5 进程的同步</h2></li>
-<li>指多个进程发生的事件之间存在着某种时序关系（先后关系，<strong>同步关系</strong>）<h1 id="2-5-进程调度"><a href="#2-5-进程调度" class="headerlink" title="2.5 进程调度"></a>2.5 进程调度</h1><h2 id="2-5-1-调度的若干问题"><a href="#2-5-1-调度的若干问题" class="headerlink" title="2.5.1 调度的若干问题"></a>2.5.1 调度的若干问题</h2></li>
-<li>4.调度算法的目标<ul>
-<li>周转时间 = 作业完成时间 - 提交时间</li>
-<li>带权周转时间 = 作业周转时间/作业实际运行时间</li>
-<li>平均周转时间 = N个作业的周转时间之和/N个作业</li>
-<li>平均带权周转时间 = N个作业带权周转时间之和/N个作业</li>
-</ul>
-</li>
-</ul>
-<h1 id="2-5-2-批处理系统的调度算法"><a href="#2-5-2-批处理系统的调度算法" class="headerlink" title="2.5.2 批处理系统的调度算法"></a>2.5.2 批处理系统的调度算法</h1><ol>
-<li>先来先服务（FCFS）</li>
-<li>短作业优先算法（SJF）</li>
-</ol>
-<h1 id="2-5-3-交互式系统的调度算法"><a href="#2-5-3-交互式系统的调度算法" class="headerlink" title="2.5.3 交互式系统的调度算法"></a>2.5.3 交互式系统的调度算法</h1><ol>
-<li>时间片轮转法（RR）</li>
-<li>优先级算法</li>
-<li>多级队列算法</li>
-<li>多级反馈队列算法</li>
-<li>补充：安按照高响应比算法(R)<ul>
-<li>响应比R = 1 + 作业等待时间 /作业运行时间</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/28/二-进程管理/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -2090,15 +1763,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Golang</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2114,7 +1783,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">thinkphp5</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2126,11 +1799,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">大话数据结构笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">thinkphp5</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">循环链表</a>
+                <a href="javascript:void(0)" class="js-tag color4">大话数据结构笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2139,6 +1812,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">递归</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">循环链表</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2154,6 +1831,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">特殊句式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">链表</a>
               </li>
              
@@ -2166,15 +1847,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">特殊句式</a>
+                <a href="javascript:void(0)" class="js-tag color2">坑</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">状语从句</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">坑</a>
               </li>
              
               <li class="article-tag-list-item">
